@@ -90,6 +90,24 @@
     .battle-accuracy-effect.show{animation:accuracyBurst 1.15s cubic-bezier(.16,1,.3,1) both}
     .battle-accuracy-effect.perfect{border-color:#4ade80;box-shadow:0 0 70px rgba(34,197,94,.38),inset 0 0 30px rgba(34,197,94,.08)}
     .battle-accuracy-effect.zero{border-color:#fb7185;box-shadow:0 0 70px rgba(244,63,94,.32),inset 0 0 30px rgba(244,63,94,.08)}
+    .battle-accuracy-effect.reflection{border-color:#67e8f9;background:radial-gradient(ellipse at 50% 0,rgba(34,211,238,.24),transparent 70%),rgba(2,6,23,.94);box-shadow:0 0 28px rgba(34,211,238,.7),0 0 85px rgba(34,211,238,.42),inset 0 0 34px rgba(34,211,238,.16)}
+    .battle-accuracy-effect.reflection .effect-title{color:#a5f3fc;text-shadow:0 0 18px rgba(34,211,238,.8);animation:reflectTitlePulse .55s ease-in-out 2}
+    @keyframes reflectTitlePulse{50%{transform:scale(1.1);letter-spacing:.09em;text-shadow:0 0 28px rgba(34,211,238,1)}}
+    .same-title-battle-card{border-color:rgba(250,204,21,.95)!important;box-shadow:0 0 0 2px rgba(250,204,21,.28),0 0 22px rgba(250,204,21,.48),0 0 42px rgba(168,85,247,.24),inset 0 0 24px rgba(250,204,21,.12);animation:sameTitleCardGlow 1.6s ease-in-out infinite alternate}
+    /* Giữ khung chiến đấu đúng bằng chiều rộng ảnh 3:4 bị giới hạn chiều cao 320px (240px), không để grid/title kéo giãn khung. */
+    .round-lane>.same-title-side,.round-lane>.round-card{width:240px;min-width:0;max-width:100%;box-sizing:border-box}
+    .round-lane>.same-title-side:first-child,.round-lane>.round-card:first-child{justify-self:end}
+    .round-lane>.same-title-side:last-child,.round-lane>.round-card:last-child{justify-self:start}
+    .same-title-side{width:240px;min-width:0;max-width:100%;display:flex;flex-direction:column;align-items:stretch;gap:9px;box-sizing:border-box}
+    /* Title là phần tử độc lập; không được phép quyết định kích thước thẻ hoặc cột grid. */
+    .same-title-card-label{display:flex;flex:0 0 auto;width:100%;max-width:100%;min-width:0;min-height:38px;align-items:center;justify-content:center;box-sizing:border-box;padding:8px 10px;text-align:center;overflow-wrap:anywhere;word-break:break-word;white-space:normal;line-height:1.25;font-size:clamp(10px,2vw,14px);font-weight:1000;letter-spacing:.04em;color:#fef3c7;text-shadow:0 0 10px rgba(250,204,21,.9),0 0 22px rgba(245,158,11,.55);background:linear-gradient(90deg,rgba(120,53,15,.88),rgba(88,28,135,.9),rgba(120,53,15,.88));border:1px solid rgba(253,224,71,.8);border-radius:12px;box-shadow:0 0 16px rgba(250,204,21,.18);contain:layout paint}
+    .same-title-side>.round-card{width:100%;min-width:0;max-width:100%;flex:0 0 auto;box-sizing:border-box}
+    .round-card>.aspect-\[3\/4\]{width:100%;height:320px;max-height:320px;aspect-ratio:3/4;overflow:hidden;}
+    .round-card>.aspect-\[3\/4\] .media{display:block;width:100%;height:100%;object-fit:cover;}
+    @media(max-width:700px){.round-lane>.same-title-side,.round-lane>.round-card,.same-title-side{width:min(240px,100%)}.round-card>.aspect-\[3\/4\]{height:auto;aspect-ratio:3/4;max-height:320px}}
+
+    .round-lane>.same-title-side{min-width:0;max-width:100%;justify-self:stretch}
+    @keyframes sameTitleCardGlow{from{filter:brightness(1.05);box-shadow:0 0 0 2px rgba(250,204,21,.22),0 0 18px rgba(250,204,21,.38),inset 0 0 18px rgba(250,204,21,.08)}to{filter:brightness(1.28);box-shadow:0 0 0 3px rgba(250,204,21,.48),0 0 32px rgba(250,204,21,.75),0 0 50px rgba(168,85,247,.32),inset 0 0 30px rgba(250,204,21,.16)}}
     .battle-accuracy-effect .effect-title{font-family:'Be Vietnam Pro',sans-serif;font-size:clamp(1.5rem,5vw,3rem);font-weight:900;letter-spacing:.04em}
     .battle-accuracy-effect .effect-sub{font-size:.72rem;color:#94a3b8;margin-top:5px;letter-spacing:.18em;text-transform:uppercase}
     @keyframes accuracyBurst{0%{opacity:0;transform:translate(-50%,-50%) scale(.72)}18%{opacity:1;transform:translate(-50%,-50%) scale(1.08)}72%{opacity:1;transform:translate(-50%,-50%) scale(1)}100%{opacity:0;transform:translate(-50%,-50%) scale(1.03)}}
@@ -97,7 +115,7 @@
     @keyframes cardInLeft{0%{opacity:0;transform:translateX(-80px) translateY(24px) rotate(-6deg) scale(.82)}70%{opacity:1;transform:translateX(8px) translateY(-4px) rotate(1deg) scale(1.03)}100%{opacity:1;transform:none}}
     @keyframes cardInRight{0%{opacity:0;transform:translateX(80px) translateY(24px) rotate(6deg) scale(.82)}70%{opacity:1;transform:translateX(-8px) translateY(-4px) rotate(-1deg) scale(1.03)}100%{opacity:1;transform:none}}
     .round-lane{min-height:330px;display:grid;grid-template-columns:minmax(0,1fr) 150px minmax(0,1fr);align-items:center;gap:18px}
-    .round-lane>.round-card:first-child{justify-self:end;z-index:2}.round-lane>.round-card:last-child{justify-self:start;z-index:2}
+    .round-lane>.round-card:first-child,.round-lane>.same-title-side:first-child{justify-self:end;z-index:2}.round-lane>.round-card:last-child,.round-lane>.same-title-side:last-child{justify-self:start;z-index:2}
     .combo{font-family:Cinzel,serif;font-weight:900;font-size:1.25rem}
     .leaderboard-row{transition:.2s}.leaderboard-row:hover{transform:translateX(3px);background:rgba(255,255,255,.04)}
     .leaderboard-scroll{height:188px;overflow-y:auto;padding-right:5px;scrollbar-width:thin;scrollbar-color:rgba(148,163,184,.45) rgba(15,23,42,.65)}
@@ -435,15 +453,22 @@
             <div class="flex justify-between mt-2"><span class="text-slate-500">Sao</span><b id="rank-stars-small">0 / 7</b></div>
           </div>
         </div>
-        <div class="mt-7 rounded-2xl border border-slate-800 bg-slate-950/45 p-4">
+        <div class="mt-7">
+          <a href="phieuluu.html" class="btn w-full mb-4 rounded-2xl py-3.5 border border-emerald-300/40 bg-gradient-to-r from-emerald-700 to-teal-600 font-black text-lg text-white flex items-center justify-center gap-3 shadow-lg shadow-emerald-950/30 hover:brightness-110">
+            <span><i class="fa-solid fa-compass mr-2 text-emerald-100"></i>PHIÊU LƯU</span>
+          </a>
+        </div>
+        <div class="rounded-2xl border border-slate-800 bg-slate-950/45 p-4">
           <div class="flex items-center justify-between gap-3 mb-3">
             <div class="text-[9px] text-slate-500 uppercase tracking-[.2em]">Rank hiện tại</div>
             <button onclick="showRankModal()" class="btn inline-flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg border border-amber-300/45 bg-amber-300/10 text-amber-100 text-[10px] font-black hover:bg-amber-300/20" title="Xem hệ thống rank"><i class="fa-solid fa-circle-question"></i> Hệ thống Rank</button>
           </div>
           <div id="match-rank-card" class="rank-spin-wrap" aria-label="Rank hiện tại"></div>
-          <button onclick="openMatchmaking()" class="btn match-pulse mt-5 w-full rounded-2xl py-4 bg-gradient-to-r from-violet-600 to-indigo-600 font-black text-lg flex items-center justify-center gap-3">
-            <span><i class="fa-solid fa-crosshairs mr-2"></i>GHÉP TRẬN</span>
-          </button>
+          <div class="mt-5">
+            <button onclick="openMatchmaking()" class="btn match-pulse w-full rounded-2xl py-4 bg-gradient-to-r from-violet-600 to-indigo-600 font-black text-lg flex items-center justify-center gap-3">
+              <span><i class="fa-solid fa-crosshairs mr-2"></i>GHÉP TRẬN</span>
+            </button>
+          </div>
         </div>
       </div>
     </section>
@@ -460,7 +485,7 @@
         <p class="text-xs text-slate-500 mt-1">Chọn đủ 5 thẻ, sau đó ấn <b class="text-amber-300">XÁC NHẬN & BẮT ĐẦU TRẬN</b> để vào trận.</p>
       </div>
       <div class="flex items-center gap-3">
-        <div id="selection-timer" class="selection-timer font-cinzel text-2xl font-black text-amber-300">30.0s</div>
+        <div id="selection-timer" class="selection-timer font-cinzel text-2xl font-black text-amber-300">45.0s</div>
       </div>
     </header>
 
@@ -479,12 +504,17 @@
       <p class="mobile-selection-hint hidden text-[10px] text-slate-400 mt-2"><i class="fa-solid fa-hand-pointer text-amber-300 mr-1"></i> Chạm thẻ bên dưới để thêm vào đội. Chạm lại thẻ đã chọn để bỏ. Đủ 5/5 thẻ thì nút bắt đầu sẽ sáng.</p>
     </div>
 
-    <div class="mt-5 flex items-end justify-between">
+    <div class="mt-5 flex flex-wrap items-end justify-between gap-3">
       <div>
         <h2 class="font-cinzel text-2xl font-black">Túi Thẻ</h2>
         <p class="text-xs text-slate-500">Danh sách thẻ khả dụng trong bộ sưu tập.</p>
       </div>
-      <span id="owned-label" class="text-xs text-slate-500"></span>
+      <div class="flex items-center gap-2 flex-wrap">
+        <button id="recommended-formation-btn" type="button" onclick="toggleRecommendedFormation()" class="hidden px-3 py-2 rounded-xl border border-violet-400/40 bg-violet-950/70 text-violet-200 text-xs font-black hover:bg-violet-900/80 transition-colors">
+          <i class="fa-solid fa-layer-group mr-1"></i> Đội hình đề xuất
+        </button>
+        <span id="owned-label" class="text-xs text-slate-500"></span>
+      </div>
     </div>
     <div id="collection-grid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-4 mt-4"></div>
 
@@ -730,6 +760,7 @@ let progress = {totalPulls:0,level:0,tickets:0};
 let playerName = "";
 let rankState = {index:0,stars:0};
 let selectedIds = [];
+let recommendedFormationFilter = false;
 let battle = null;
 let music = null;
 let lobbyMusic = null;
@@ -1269,6 +1300,7 @@ function openMatchmaking(){
     return;
   }
   selectedIds=[];
+  recommendedFormationFilter=false;
   playLobbyMusic();
   showOnly("lobby-screen");
   startMatchmakingSearch();
@@ -1353,6 +1385,7 @@ function confirmMatchReady(){
   matchmaking.active=false;
   closeMatchmakingModal();
   selectedIds=[];
+  recommendedFormationFilter=false;
   localStorage.setItem(STORAGE_BATTLE_ACTIVE,'1');
   showOnly('match-screen');
   playBattleMusic();
@@ -1369,7 +1402,7 @@ function cancelMatchmaking(){
 function startCardSelectionTimer(){
   if(window.cardSelectionTimer)clearInterval(window.cardSelectionTimer);
   const el=document.getElementById('selection-timer');
-  const deadline=Date.now()+30000;
+  const deadline=Date.now()+45000;
   window.cardSelectionDeadline=deadline;
   const tick=()=>{
     const left=Math.max(0,deadline-Date.now());
@@ -1412,6 +1445,7 @@ function surrenderCardSelection(reason='manual'){
   matchmaking.active=false;
   closeMatchmakingModal();
   selectedIds=[];
+  recommendedFormationFilter=false;
   loadData();
   refreshLobby();
   syncLeaderboard();
@@ -1476,8 +1510,17 @@ function backToLobby(){
 }
 function renderCollection(){
   const grid=document.getElementById("collection-grid");
-  document.getElementById("owned-label").textContent=`${collection.length} thẻ sở hữu`;
+  const recommendBtn=document.getElementById("recommended-formation-btn");
+  if(selectedIds.length===0)recommendedFormationFilter=false;
+  if(recommendBtn){
+    recommendBtn.classList.toggle("hidden",selectedIds.length===0);
+    recommendBtn.classList.toggle("border-amber-300/70",recommendedFormationFilter);
+    recommendBtn.classList.toggle("bg-amber-500/20",recommendedFormationFilter);
+    recommendBtn.classList.toggle("text-amber-200",recommendedFormationFilter);
+    recommendBtn.innerHTML=`<i class="fa-solid fa-layer-group mr-1"></i> Đội hình đề xuất${recommendedFormationFilter?' ✓':''}`;
+  }
   if(!collection.length){
+    document.getElementById("owned-label").textContent=`${collection.length} thẻ sở hữu`;
     if(grid.dataset.empty!=="1"){
       grid.innerHTML=`<div class="empty rounded-2xl p-10 text-center text-slate-500 col-span-full">Chưa có thẻ nào trong Túi Thẻ.</div>`;
       grid.dataset.empty="1";
@@ -1485,7 +1528,14 @@ function renderCollection(){
     return;
   }
   delete grid.dataset.empty;
-  const sortedCollection=[...collection].sort((a,b)=>(Number(b.power)||0)-(Number(a.power)||0));
+  let sortedCollection=[...collection].sort((a,b)=>(Number(b.power)||0)-(Number(a.power)||0));
+  if(recommendedFormationFilter&&selectedIds.length){
+    const titles=new Set(selectedIds.map(id=>getCharById(id)).filter(Boolean).map(c=>String(c.title||"").trim().toLocaleLowerCase("vi")).filter(Boolean));
+    sortedCollection=sortedCollection.filter(c=>titles.has(String(c.title||"").trim().toLocaleLowerCase("vi")));
+    document.getElementById("owned-label").textContent=`${sortedCollection.length} thẻ phù hợp / ${collection.length} thẻ`;
+  }else{
+    document.getElementById("owned-label").textContent=`${collection.length} thẻ sở hữu`;
+  }
 
   // If the card list is unchanged, update only selected styling. Keep video nodes alive
   // so autoplay MP4 cards don't restart or flash on every tap.
@@ -1501,6 +1551,10 @@ function renderCollection(){
     return;
   }
 
+  if(!sortedCollection.length){
+    grid.innerHTML=`<div class="empty rounded-2xl p-8 text-center text-slate-500 col-span-full">Không có thẻ nào cùng title với các thẻ đã chọn.</div>`;
+    return;
+  }
   grid.innerHTML=sortedCollection.map(c=>{
     const selected=selectedIds.includes(String(c.id));
     return `<button type="button" data-card-id="${esc(String(c.id))}" onclick="toggleCard('${esc(String(c.id))}')" class="card-choice ${selected?"selected":""} relative text-left rounded-2xl overflow-hidden bg-slate-950 ${selected?"":"border-slate-800"}">
@@ -1517,12 +1571,19 @@ function renderCollection(){
     </button>`
   }).join("");
 }
+function toggleRecommendedFormation(){
+  if(!selectedIds.length)return;
+  recommendedFormationFilter=!recommendedFormationFilter;
+  renderCollection();
+}
+
 function toggleCard(id){
   id=String(id);
   const i=selectedIds.indexOf(id);
   if(i>=0) selectedIds.splice(i,1);
   else if(selectedIds.length<5) selectedIds.push(id);
   else return;
+  if(selectedIds.length===0)recommendedFormationFilter=false;
   renderCollection();renderSelectedTeam();
   if(selectedIds.length===3){
     document.getElementById('selection-timer').classList.remove('danger');
@@ -1554,11 +1615,47 @@ function opponentRange(){
   return {min,max};
 }
 function randInt(min,max){return Math.floor(Math.random()*(max-min+1))+min}
+function canonicalCardTitle(card){
+  return String(card?.title??card?.name??'').trim().toLocaleLowerCase('vi');
+}
+function hasFiveSameTitle(cards){
+  return Array.isArray(cards)&&cards.length===5&&!!canonicalCardTitle(cards[0])&&cards.every(c=>canonicalCardTitle(c)===canonicalCardTitle(cards[0]));
+}
+function botSameTitleChance(){
+  // Tân Binh 10%, mỗi bậc rank tăng 5%, tối đa 40%.
+  return Math.min(40,10+Math.max(0,Number(rankState?.index)||0)*5)/100;
+}
 function randomOpponentTeam(targetPower){
   const pool=(typeof CHARACTER_POOL!=='undefined'&&Array.isArray(CHARACTER_POOL)?CHARACTER_POOL:collection).filter(Boolean);
   const shuffled=[...pool].sort(()=>Math.random()-.5);
-  const base=shuffled.slice(0,Math.min(5,shuffled.length));
+  let base=shuffled.slice(0,Math.min(5,shuffled.length));
   while(base.length<5 && collection.length) base.push(collection[randInt(0,collection.length-1)]);
+  let botHasSameTitle=false;
+  if(pool.length&&Math.random()<botSameTitleChance()){
+    const titleGroups=new Map();
+    pool.forEach(card=>{
+      const key=canonicalCardTitle(card);
+      if(!key)return;
+      if(!titleGroups.has(key))titleGroups.set(key,[]);
+      titleGroups.get(key).push(card);
+    });
+    // Chỉ kích hoạt đội hình đồng danh khi có đủ 5 thẻ cùng title với ID khác nhau.
+    // Khử trùng theo ID trước khi chọn để không nhân bản một thẻ thành nhiều vị trí.
+    const groups=[...titleGroups.values()].map(group=>{
+      const uniqueById=new Map();
+      group.forEach(card=>{
+        const id=card?.id;
+        if(id!==undefined&&id!==null&&String(id).trim()!==''&&!uniqueById.has(String(id))) uniqueById.set(String(id),card);
+      });
+      return [...uniqueById.values()];
+    }).filter(group=>group.length>=5);
+    if(groups.length){
+      const chosenGroup=groups[randInt(0,groups.length-1)];
+      const shuffledGroup=[...chosenGroup].sort(()=>Math.random()-.5);
+      base=shuffledGroup.slice(0,5);
+      botHasSameTitle=base.length===5&&new Set(base.map(card=>String(card.id))).size===5;
+    }
+  }
 
   /*
     Giữ nguyên cách chia Power theo trọng số của 5 thẻ.
@@ -1597,7 +1694,8 @@ function randomOpponentTeam(targetPower){
       ...c,
       battlePower:Math.max(mins[i],share),
       battleTier:cardTier(c),
-      battleUnit:units[i]
+      battleUnit:units[i],
+      botSameTitleTeam:botHasSameTitle
     };
   });
 }
@@ -1666,7 +1764,9 @@ function resetBattleAfkTimer(){
  }
  function makeOpponentBan(){
    if(opponentBanId||selectedBattleMap)return;
-   opponentBanId=BATTLE_MAPS[randInt(0,BATTLE_MAPS.length-1)].id;
+   const opponentChoices=BATTLE_MAPS.filter(m=>m.id!==playerBanId);
+   if(!opponentChoices.length)return;
+   opponentBanId=opponentChoices[randInt(0,opponentChoices.length-1)].id;
    const m=BATTLE_MAPS.find(x=>x.id===opponentBanId);
    bannedMapIds=[...new Set([playerBanId,opponentBanId].filter(Boolean))];
    document.getElementById('opponent-map-ban-status').textContent='Đối thủ đã cấm: '+m.name;
@@ -1697,6 +1797,7 @@ function resetBattleAfkTimer(){
    if(playerBanId||playerBanResolved||selectedBattleMap||rouletteStarted)return;
    if(mapId){
      const chosen=BATTLE_MAPS.find(m=>m.id===mapId);if(!chosen)return;
+     if(chosen.id===opponentBanId){document.getElementById('player-map-ban-status').textContent='Map này đối thủ đã cấm, hãy chọn map khác';return;}
      playerBanId=chosen.id;
      playerBanResolved=true;
      bannedMapIds=[...new Set([playerBanId,opponentBanId].filter(Boolean))];
@@ -1787,7 +1888,9 @@ function resetBattleAfkTimer(){
    const range=opponentRange();
    const enemyTarget=randInt(range.min,range.max);
    const enemyTeam=randomOpponentTeam(enemyTarget).map(c=>applyMapPower(c,Number(c.battlePower)||Number(c.power)||0,mapElement));
-   battle={playerTeam,enemyTeam,map:selectedBattleMap,startRankIndex:rankState.index,playerScore:0,enemyScore:0,round:0,finished:false,revealed:false,rolled:false,lastWinner:null,timingRunning:false,timingPos:.02,timingDir:1,timingDeadline:0,timingZoneTop:.5,timingZoneHeight:.12,timingBreakthroughHeight:.028,playerAccuracy:null,enemyAccuracy:null,timingRaf:null,afkDeadline:Date.now()+30000};
+   const sameTitleTeam=hasFiveSameTitle(playerTeam);
+   const enemySameTitleTeam=hasFiveSameTitle(enemyTeam);
+   battle={playerTeam,enemyTeam,sameTitleTeam,enemySameTitleTeam,map:selectedBattleMap,startRankIndex:rankState.index,playerScore:0,enemyScore:0,round:0,finished:false,revealed:false,rolled:false,lastWinner:null,timingRunning:false,timingPos:.02,timingDir:1,timingDeadline:0,timingZoneTop:.5,timingZoneHeight:.12,timingBreakthroughHeight:.028,playerAccuracy:null,enemyAccuracy:null,timingRaf:null,afkDeadline:Date.now()+30000};
    document.getElementById('battle-player-rank').textContent=currentRank().name;
    document.getElementById('battle-player-name').textContent=playerName;
    document.getElementById('battle-player-power').textContent=fmt(playerTeam.reduce((s,c)=>s+c.battlePower,0))+' Power';
@@ -1796,8 +1899,7 @@ function resetBattleAfkTimer(){
    document.getElementById('battle-map-icon').textContent=selectedBattleMap.icon;
    document.getElementById('battle-map-name').textContent=selectedBattleMap.name;
    document.getElementById('battle-map-rule').textContent=`Hệ ${selectedBattleMap.element} · Khắc hệ: cấm bộc phá, tối đa 90% · Trùng hệ: 20% phản 100% Power`; 
-   document.getElementById('battle-status').textContent=`${selectedBattleMap.name} · Hệ ${selectedBattleMap.element}: khắc hệ cấm bộc phá, tối đa 90%; trùng hệ có 20% phản 100% Power. BO5 bắt đầu!`;
-   document.getElementById('battle-result').classList.add('hidden');
+   document.getElementById('battle-status').textContent=`${selectedBattleMap.name} · Hệ ${selectedBattleMap.element}.${sameTitleTeam?' ✦ ĐỒNG DANH: Đội bạn có 5 thẻ cùng title — hiệu suất tối thiểu 20%, không thể Kiệt Sức.':''}${enemySameTitleTeam?' ✦ ĐỐI THỦ KÍCH HOẠT ĐỘI HÌNH 5 THẺ CÙNG TITLE!':''} BO5 bắt đầu!`;   document.getElementById('battle-result').classList.add('hidden');
    document.getElementById('player-score').textContent='0';document.getElementById('enemy-score').textContent='0';
    document.getElementById('battle-next').disabled=false;document.getElementById('battle-next').onclick=playNextRound;document.getElementById('battle-next').textContent='⚔ BẮT ĐẦU CẶP 1';
    renderBattleLanes();
@@ -1829,7 +1931,8 @@ function timingAccuracy(pos){
   const center=(top+bottom)/2;
   const distance=pos<center?top-pos:pos-bottom;
   const maxDistance=Math.max(.05,Math.max(center-top,bottom-center)*3.2);
-  const accuracy=Math.max(0,1-distance/maxDistance);
+  let accuracy=Math.max(0,1-distance/maxDistance);
+  if(battle?.sameTitleTeam)accuracy=Math.max(.2,accuracy);
   return currentCard?.mapCountered?Math.min(.9,accuracy):accuracy;
 }
 function timingLabel(acc){
@@ -1855,8 +1958,8 @@ function timingFrame(now){
   if(now>=battle.timingDeadline){
     battle.timingRunning=false;
     if(battle.timingRaf)cancelAnimationFrame(battle.timingRaf);
-    battle.playerAccuracy=0;
-    showAccuracyEffect(0);
+    battle.playerAccuracy=battle.sameTitleTeam ? .2 : 0;
+    showAccuracyEffect(battle.playerAccuracy);
     resolveTimingResult();
     return;
   }
@@ -1876,7 +1979,7 @@ function showAccuracyEffect(acc){
   const title=document.getElementById('battle-accuracy-title');
   const sub=document.getElementById('battle-accuracy-sub');
   if(!box||!title||!sub)return;
-  box.classList.remove('show','perfect','zero');
+  box.classList.remove('show','perfect','zero','reflection');
   box.style.borderColor='';box.style.boxShadow='';
   void box.offsetWidth;
   if(acc>=10){title.textContent='BỘC PHÁ TIỀM NĂNG';sub.textContent='Power ×10 · Đòn đánh bùng nổ';box.classList.add('perfect')}
@@ -1884,6 +1987,18 @@ function showAccuracyEffect(acc){
   else if(acc<=.001){title.textContent='KIỆT SỨC';sub.textContent='Lực chiến suy giảm';box.classList.add('zero')}
   else{title.textContent=`HIỆU SUẤT ${Math.round(acc*100)}%`;sub.textContent='Kết quả thao tác lực chiến'}
   box.classList.add('show');
+}
+function showReflectionEffect(playerReflected,enemyReflected){
+  const box=document.getElementById('battle-accuracy-effect');
+  const title=document.getElementById('battle-accuracy-title');
+  const sub=document.getElementById('battle-accuracy-sub');
+  if(!box||!title||!sub)return;
+  box.classList.remove('show','perfect','zero','reflection');
+  box.style.borderColor='';box.style.boxShadow='';
+  title.textContent='PHẢN KÍCH';
+  sub.textContent=playerReflected&&enemyReflected?'CẢ HAI BÊN PHẢN KÍCH · +80% DAMAGE GỐC':playerReflected?'BẠN PHẢN KÍCH · NHẬN THÊM 80% DAMAGE GỐC CỦA ĐỐI THỦ':'ĐỐI THỦ PHẢN KÍCH · NHẬN THÊM 80% DAMAGE GỐC CỦA BẠN';
+  void box.offsetWidth;
+  box.classList.add('reflection','show');
 }
 function stopTiming(){
   if(!battle||battle.finished||!battle.timingRunning)return;
@@ -1904,10 +2019,12 @@ function resolveTimingResult(){
   if(battle.enemyBreakthrough)battle.enemyAccuracy=10;
   if(ec.mapCountered)battle.enemyAccuracy=Math.min(.9,battle.enemyAccuracy);
   const playerPower=Number(pc.battlePower)||0, enemyPower=Number(ec.battlePower)||0;
-  battle.playerReflected=!!(pc.mapBonus&&Math.random()<.20);
-  battle.enemyReflected=!!(ec.mapBonus&&Math.random()<.20);
-  battle.playerCombo=Math.round((playerPower+(battle.playerReflected?enemyPower:0))*battle.playerAccuracy);
-  battle.enemyCombo=Math.round((enemyPower+(battle.enemyReflected?playerPower:0))*battle.enemyAccuracy);
+  // Phản Kích được xác định trước khi thanh hiệu suất bắt đầu; chỉ kích hoạt khi hệ thẻ trùng hệ map.
+  // Phần phản kích cộng thêm 80% DAMAGE gốc của đối thủ, không bị nhân theo hiệu suất của thanh.
+  battle.playerReflected=!!(pc.mapBonus&&battle.playerReflected);
+  battle.enemyReflected=!!(ec.mapBonus&&battle.enemyReflected);
+  battle.playerCombo=Math.round(playerPower*battle.playerAccuracy+(battle.playerReflected?enemyPower*.8:0));
+  battle.enemyCombo=Math.round(enemyPower*battle.enemyAccuracy+(battle.enemyReflected?playerPower*.8:0));
   battle.rolled=true;
   battle.lastWinner=battle.playerCombo>=battle.enemyCombo;
   if(battle.playerCombo===battle.enemyCombo){
@@ -1919,7 +2036,8 @@ function resolveTimingResult(){
   document.getElementById('enemy-score').textContent=battle.enemyScore;
   renderBattleLanes();
   const winnerName=battle.playerCombo>battle.enemyCombo?playerName:document.getElementById('enemy-name').textContent;
-  document.getElementById('battle-status').textContent=`Cặp ${i+1}: ${winnerName} chiếm ưu thế với ${fmt(Math.max(battle.playerCombo,battle.enemyCombo))} DAMAGE.`;
+  document.getElementById('battle-status').textContent=`Cặp ${i+1}: ${winnerName} chiếm ưu thế với ${fmt(Math.max(battle.playerCombo,battle.enemyCombo))} DAMAGE.${battle.playerReflected||battle.enemyReflected?' ✦ PHẢN KÍCH đã kích hoạt!':''}`;
+  if(battle.playerReflected||battle.enemyReflected)showReflectionEffect(battle.playerReflected,battle.enemyReflected);
   if(battle.playerScore>=3||battle.enemyScore>=3||battle.round>=4){finishBattle();return}
   battle.round++;battle.revealed=false;battle.rolled=false;battle.lastWinner=null;battle.playerReflected=false;battle.enemyReflected=false;battle.timingPos=.5;battle.timingDeadline=0;
   resetBattleAfkTimer();
@@ -1937,13 +2055,15 @@ function renderBattleLanes(){
   const pacc=Number.isFinite(battle.playerAccuracy)?battle.playerAccuracy:null;
   const enemyAcc=Number.isFinite(battle.enemyAccuracy)?battle.enemyAccuracy:null;
   lanes.innerHTML=`<div class="round-lane py-4">
-    <div class="round-card battle-card-in-left ${pwin?'winner':ewin?'loser':''} rounded-2xl overflow-hidden bg-slate-950 border border-violet-500/20">
+    <div class="same-title-side battle-card-in-left">
+      <div class="round-card ${pwin?'winner':ewin?'loser':''} ${battle.sameTitleTeam?'same-title-battle-card':''} rounded-2xl overflow-hidden bg-slate-950 border border-violet-500/20">
       <div class="aspect-[3/4] max-h-80">${renderMedia(pc)}</div>
       <div class="p-4 text-center"><div class="text-[10px] text-violet-300 font-black">${i+1}. ${esc(pc.name||'')}</div>
       <div class="text-[8px] text-violet-300 font-black mt-1">${esc(cardTierLabel(pc))}</div>
       <div class="text-[10px] mt-1">${({Hỏa:"🔥",Thủy:"💧",Thổ:"🪨",Mộc:"🍃",Phong:"🌪️",Lôi:"⚡",Light:"☀️",Dark:"🌑"})[pc.element]||"✦"} <span class="text-slate-300">${esc(pc.element||'Chưa rõ')}</span></div>
       ${revealed?`<div class="font-cinzel text-lg font-black text-amber-300 mt-2">${fmt(pc.battlePower)} Power</div>`:`<div class="text-xs text-slate-600 mt-2">CHỈ SỐ ĐANG ẨN</div>`}
       ${rolled?`<div class="mt-3"><div class="battle-accuracy text-emerald-300">${timingLabel(pacc)}</div><div class="combo text-amber-300 mt-1">${fmt(battle.playerCombo)} DAMAGE</div></div>`:''}</div>
+      </div>
     </div>
     <div class="round-vs text-center">
       <div class="text-[10px] text-slate-600 font-black">CẶP ${i+1} / BO5</div>
@@ -1959,27 +2079,28 @@ function renderBattleLanes(){
       </div>`:`<div class="font-cinzel text-2xl font-black text-rose-400 mt-1">VS</div>`}
       ${rolled?`<div class="mt-3 text-xs font-bold ${battle.playerCombo>battle.enemyCombo?'text-emerald-300':'text-rose-300'}">${battle.playerCombo>battle.enemyCombo?'BẠN THẮNG':'ĐỐI THỦ THẮNG'}</div>`:''}
     </div>
-    <div class="round-card battle-card-in-right ${ewin?'winner':pwin?'loser':''} rounded-2xl overflow-hidden bg-slate-950 border border-rose-500/20">
+    <div class="same-title-side battle-card-in-right">
+      <div class="round-card ${ewin?'winner':pwin?'loser':''} ${battle.enemySameTitleTeam?'same-title-battle-card':''} rounded-2xl overflow-hidden bg-slate-950 border border-rose-500/20">
       <div class="aspect-[3/4] max-h-80">${renderMedia(ec)}</div>
       <div class="p-4 text-center"><div class="text-[10px] text-rose-300 font-black">${i+1}. ${esc(ec.name||'')}</div>
       <div class="text-[8px] text-rose-300 font-black mt-1">${esc(cardTierLabel(ec))}</div>
       <div class="text-[10px] mt-1">${({Hỏa:"🔥",Thủy:"💧",Thổ:"🪨",Mộc:"🍃",Phong:"🌪️",Lôi:"⚡",Light:"☀️",Dark:"🌑"})[ec.element]||"✦"} <span class="text-slate-300">${esc(ec.element||'Chưa rõ')}</span></div>
       ${revealed?`<div class="font-cinzel text-lg font-black text-rose-300 mt-2">${fmt(ec.battlePower)} Power</div>`:`<div class="text-xs text-slate-600 mt-2">CHỈ SỐ ĐANG ẨN</div>`}
       ${rolled?`<div class="mt-3"><div class="battle-accuracy text-rose-300">HIỆU SUẤT ${Math.round(enemyAcc*100)}%</div><div class="combo text-rose-300 mt-1">${fmt(battle.enemyCombo)} DAMAGE</div></div>`:''}</div>
+      </div>
     </div>
   </div>`;
 }
 function timingZoneWidthsForRank(){
-  // Chia đều độ khó qua 7 bậc: rank càng cao thì vùng xanh và vùng vàng càng hẹp.
+  // Phân bổ độ khó đều theo 7 rank: rank cao nhất giữ nguyên mức cũ,
+  // mỗi bậc thấp hơn được nới vùng xanh thêm 2% và vùng vàng thêm 1%.
   const rankIndex=Math.max(0,Math.min(RANKS.length-1,Number(rankState?.index)||0));
-  const steps=rankIndex;
-  const greenMax=Math.max(6,13-steps);
-  const greenMin=Math.max(4,8-steps*0.65);
-  // Vùng vàng luôn có độ rộng tối thiểu 2% ở rank cao nhất; tránh randInt(0,1)
-  // khiến vùng bộc phá biến mất ngẫu nhiên dù thẻ không bị map khắc hệ.
-  const yellowMin=Math.max(2,Math.round(2-steps*0.28));
-  const yellowMax=Math.max(yellowMin,Math.round(4-steps*0.55));
-  return {greenMin:Math.round(greenMin),greenMax:Math.round(greenMax),yellowMin,yellowMax};
+  const lowerRankSteps=(RANKS.length-1)-rankIndex;
+  const greenMin=4+lowerRankSteps*2;
+  const greenMax=7+lowerRankSteps*2;
+  const yellowMin=2+lowerRankSteps;
+  const yellowMax=2+lowerRankSteps;
+  return {greenMin,greenMax,yellowMin,yellowMax};
 }
 function revealCurrentPair(){
   if(!battle||battle.finished||battle.revealed)return;
@@ -1990,7 +2111,11 @@ function revealCurrentPair(){
   battle.timingBreakthroughHeight=activeCard?.mapCountered?0:Math.max(.01,randInt(zoneWidths.yellowMin,zoneWidths.yellowMax)/100);
   battle.timingZoneTop=randInt(8,Math.max(8,Math.floor((.88-battle.timingZoneHeight)*100)))/100;
   battle.playerAccuracy=null;battle.enemyAccuracy=null;
-  document.getElementById('battle-status').textContent=`Cặp ${battle.round+1}: chuẩn bị thao tác lực chiến.`;
+  // Xác suất 20% được quyết định trước khi người chơi bắt đầu thanh hiệu suất. Không kích hoạt thì không thông báo.
+  const opponentCard=battle.enemyTeam[battle.round];
+  battle.playerReflected=!!(activeCard?.mapBonus&&Math.random()<.20);
+  battle.enemyReflected=!!(opponentCard?.mapBonus&&Math.random()<.20);
+  document.getElementById('battle-status').textContent=`Cặp ${battle.round+1}: chuẩn bị thao tác lực chiến.${battle.playerReflected||battle.enemyReflected?' ✦ PHẢN KÍCH!':''}`;
   const btn=document.getElementById('battle-next');btn.disabled=false;btn.textContent='BẮT ĐẦU ĐO LỰC';btn.onclick=startTiming;
   renderBattleLanes();
   if(activeCard?.mapCountered){

@@ -917,7 +917,8 @@ function renderMedia(c){
   const url=String(c.mediaUrl||"");
   const videoExts=["mp4","webm","ogg","ogv","mov","m4v"];
   const isVideo=type==="video"||videoExts.includes(type)||videoExts.includes(ext)||videoExts.includes((url.split("?")[0].split(".").pop()||"").toLowerCase());
-  if(isVideo) return `<video src="${url}" autoplay loop muted playsinline preload="auto" class="media"></video>`;
+  // MP4/video starts without src; the manager loads only cards that enter the viewport.
+  if(isVideo) return `<video data-lazy-video-src="${esc(url)}" muted loop playsinline preload="none" class="media" aria-label="${esc(c.name||"Character")}"></video>`;
   return `<img src="${url}" alt="${esc(c.name||"Character")}" class="media" draggable="false" onerror="this.style.display='none';this.parentElement.classList.add('bg-slate-800')">`;
 }
 function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]))}
@@ -976,11 +977,47 @@ function totalPower(){return collection.reduce((s,c)=>s+(Number(c.power)||0),0)}
 function currentRank(){return RANKS[rankState.index]}
 
 const BUILTIN_BOT_NAMES = [
-  'Kẻ Lang Thang','Chiến Binh Bóng Tối','Đấu Sĩ Ẩn Danh','OBEY Challenger',
-  'Hắc Kiếm Sĩ','Chiến Tướng Vô Danh','Bóng Ma Chiến Trường','Thợ Săn Sao',
-  'Cuồng Chiến Giả','Vệ Binh Hoàng Hôn','Alex_99','John Wick','ShadowFox',
-  'NightWalker','GhostRider','ViperX','ZeroCool','DarkKnight','Skyline',
-  'BlazeRunner','CyberPunk','TitanFall','LoneWolf','StormBreaker','ApexPredator'
+  // newbie
+  'Tân Binh Tập Sự', 'Kẻ Lang Thang', 'Tay Mơ Chiến Trường', 'Kiếm Sĩ Vô Danh',
+  'Lính Mới 07', 'Mầm Non OBEY', 'Tập Sự Bất Bại', 'Bóng Nhỏ', 'Gà Chiến', 'Newbie_99',
+  'minh_anh02', 'HuyPro07', 'linh.cute', 'NamKhongNgủ', 'tuan_dz',
+  'BaoBao_12', 'meo_den99', 'KhoaYT', 'anhnhoo', 'VietAnh_x',
+
+  // warrior
+  'Chiến Binh Bóng Tối', 'Đấu Sĩ Ẩn Danh', 'Hắc Kiếm Sĩ', 'Thợ Săn Sao',
+  'Cuồng Chiến Giả', 'Vệ Binh Hoàng Hôn', 'ShadowFox', 'NightWalker', 'ViperX', 'BlazeRunner',
+  'Duc_Shadow', 'phuong_96', 'KenjiVN', 'ThaoXinh', 'hoang_blade',
+  'QuocBao88', 'Lynx_07', 'MaiAnh_ss', 'trung.pro', 'Kiet_Storm',
+
+  // knight
+  'Kỵ Sĩ Bạch Ngân', 'Kỵ Sĩ Hắc Nguyệt', 'Lưỡi Gươm Sấm Sét', 'Hiệp Sĩ Bình Minh',
+  'GhostRider', 'DarkKnight', 'StormBreaker', 'LoneWolf', 'ApexPredator', 'Thiết Kỵ 13',
+  'Long_Knight', 'Ngọc_Bích', 'SơnTùng_Fan', 'hieu_x9', 'YếnNhi',
+  'Dat_Zero', 'Phong_Blade', 'ThuyTien_88', 'minhkhoa_', 'AnhQuân07',
+
+  // general
+  'Chiến Tướng Vô Danh', 'Bóng Ma Chiến Trường', 'Thống Lĩnh Hư Không', 'Đế Vương Chiến Địa',
+  'Tổng Tư Lệnh X', 'TitanFall', 'CyberPunk', 'ZeroCool', 'Hỏa Long Tướng', 'Vạn Quân Địch',
+  'Tuan_Commander', 'HàMy_ss', 'Viet_Ace', 'Khang_X', 'LanChi_99',
+  'Nam_King', 'ThảoVy', 'QuangHuy_', 'BảoNgọc07', 'Duy_Storm',
+
+  // obey
+  'OBEY Challenger', 'Chúa Tể Đỏ', 'Kẻ Phá Giới', 'Diệt Thế Giả',
+  'OBEY_Zero', 'Bạo Quân Vô Song', 'Hủy Diệt Tối Cao', 'Vương Giả Bóng Đêm', 'Thần Chiến', 'OmegaPrime',
+  'Khoa_Destroy', 'Ngọc_Hà', 'Minh_Overlord', 'Hưng_X', 'Trang_99',
+  'Lâm_Apex', 'Vy_Shadow', 'Đức_Omega', 'Phúc_Zero', 'AnhThư_ss',
+
+  // epic
+  'Thần Thoại Cổ Đại', 'Kẻ Viết Lại Định Mệnh', 'Thiên Khải', 'Tinh Hà Bất Diệt',
+  'EternalFlame', 'CelestialX', 'AstralHunter', 'VoidWalker', 'Phán Quyết Thiên Hà', 'Bất Tử Giả',
+  'Huy_Celestial', 'Mai_Ly', 'Tuấn_Astral', 'Nhi_Void', 'Kiệt_Star',
+  'Thảo_X', 'Bình_Eternal', 'Linh_Galaxy', 'Đạt_Nova', 'Yến_ss',
+
+  // legend
+  'Đấng Sáng Thế', 'Chúa Tể Vũ Trụ', 'Thần Chủ Tối Thượng', 'Vô Cực Chi Vương',
+  'GalaxyOverlord', 'OriginZero', 'TheFinalOne', 'EternalKing', 'Đỉnh Cao Huyền Thoại', 'Apex_Ω',
+  'Minh_Legend', 'Hà_Origin', 'Quân_Final', 'Ngọc_Apex', 'Tuấn_Ω',
+  'Lan_Galaxy', 'Đức_King', 'Vy_Eternal', 'Khoa_Zero', 'Anh_ss'
 ];
 function normalizeCharacterName(value){
   return String(value||'').normalize('NFC').trim().replace(/\s+/g,' ').toLocaleLowerCase('vi');
@@ -1215,7 +1252,7 @@ function refreshLobby(){
   const winRateEl=document.getElementById("battle-win-rate");
   if(matchesEl)matchesEl.textContent=fmt(battleStats.matches);
   if(winRateEl)winRateEl.textContent=`${battleWinRate()}%`;
-  document.getElementById("rank-progress-text").textContent=rankState.index===RANKS.length-1?`${rankState.stars} / ${LEGENDARY_STAR_CAP} sao`:`${rankState.stars} / 7 sao`;
+  document.getElementById("rank-progress-text").textContent=rankState.index===RANKS.length-1?`${rankState.stars} sao`:`${rankState.stars} / 7 sao`;
   renderRepresentative();
   renderStars(document.getElementById("stars"),rankState.stars);
   renderMatchRankCard();
@@ -1239,7 +1276,7 @@ function showRankModal(){
         <div class="text-[9px] text-white/70 uppercase">Đại diện thẻ</div>
         <div class="mt-2 h-8 rounded-lg border-2 border-white/40 bg-white/10"></div>
         <div class="flex justify-center gap-0.5 mt-3">${Array.from({length:7},(_,j)=>`<i class="fa-solid fa-star ${i===rankState.index&&j<Math.min(7,rankState.stars)?'text-yellow-200':'text-yellow-300'} text-xs"></i>`).join("")}</div>
-        <div class="text-[10px] text-white/70 mt-2">${i===RANKS.length-1?`Tối đa ${LEGENDARY_STAR_CAP} sao`:'7 sao để thăng hạng'}</div>
+        <div class="text-[10px] text-white/70 mt-2">${i===RANKS.length-1?'Bậc rank tối cao':'7 sao để thăng hạng'}</div>
       </div>
     </div>`).join("");
   document.getElementById("rank-modal").classList.remove("hidden");
@@ -1251,37 +1288,70 @@ function opponentPreviewPool(){
   const pool=(typeof CHARACTER_POOL!=='undefined'&&Array.isArray(CHARACTER_POOL)?CHARACTER_POOL:collection).filter(Boolean);
   return pool.length?pool:[];
 }
+/* Danh sách tên BOT theo từng bậc Rank.
+   Mỗi trận sẽ chọn ngẫu nhiên một tên trong nhóm Rank hiện tại;
+   không thay đổi dữ liệu thẻ, cách tính Power hoặc thuật toán chiến đấu. */
+const BOT_NAMES_BY_RANK = {
+  newbie: [
+    // cũ
+    'Tân Binh Tập Sự', 'Kẻ Lang Thang', 'Tay Mơ Chiến Trường', 'Kiếm Sĩ Vô Danh',
+    'Lính Mới 07', 'Mầm Non OBEY', 'Tập Sự Bất Bại', 'Bóng Nhỏ', 'Gà Chiến', 'Newbie_99',
+    // mới
+    'minh_anh02', 'HuyPro07', 'linh.cute', 'NamKhongNgủ', 'tuan_dz',
+    'BaoBao_12', 'meo_den99', 'KhoaYT', 'anhnhoo', 'VietAnh_x'
+  ],
+  warrior: [
+    // cũ
+    'Chiến Binh Bóng Tối', 'Đấu Sĩ Ẩn Danh', 'Hắc Kiếm Sĩ', 'Thợ Săn Sao',
+    'Cuồng Chiến Giả', 'Vệ Binh Hoàng Hôn', 'ShadowFox', 'NightWalker', 'ViperX', 'BlazeRunner',
+    // mới
+    'Duc_Shadow', 'phuong_96', 'KenjiVN', 'ThaoXinh', 'hoang_blade',
+    'QuocBao88', 'Lynx_07', 'MaiAnh_ss', 'trung.pro', 'Kiet_Storm'
+  ],
+  knight: [
+    // cũ
+    'Kỵ Sĩ Bạch Ngân', 'Kỵ Sĩ Hắc Nguyệt', 'Lưỡi Gươm Sấm Sét', 'Hiệp Sĩ Bình Minh',
+    'GhostRider', 'DarkKnight', 'StormBreaker', 'LoneWolf', 'ApexPredator', 'Thiết Kỵ 13',
+    // mới
+    'Long_Knight', 'Ngọc_Bích', 'SơnTùng_Fan', 'hieu_x9', 'YếnNhi',
+    'Dat_Zero', 'Phong_Blade', 'ThuyTien_88', 'minhkhoa_', 'AnhQuân07'
+  ],
+  general: [
+    // cũ
+    'Chiến Tướng Vô Danh', 'Bóng Ma Chiến Trường', 'Thống Lĩnh Hư Không', 'Đế Vương Chiến Địa',
+    'Tổng Tư Lệnh X', 'TitanFall', 'CyberPunk', 'ZeroCool', 'Hỏa Long Tướng', 'Vạn Quân Địch',
+    // mới
+    'Tuan_Commander', 'HàMy_ss', 'Viet_Ace', 'Khang_X', 'LanChi_99',
+    'Nam_King', 'ThảoVy', 'QuangHuy_', 'BảoNgọc07', 'Duy_Storm'
+  ],
+  obey: [
+    // cũ
+    'OBEY Challenger', 'Chúa Tể Đỏ', 'Kẻ Phá Giới', 'Diệt Thế Giả',
+    'OBEY_Zero', 'Bạo Quân Vô Song', 'Hủy Diệt Tối Cao', 'Vương Giả Bóng Đêm', 'Thần Chiến', 'OmegaPrime',
+    // mới
+    'Khoa_Destroy', 'Ngọc_Hà', 'Minh_Overlord', 'Hưng_X', 'Trang_99',
+    'Lâm_Apex', 'Vy_Shadow', 'Đức_Omega', 'Phúc_Zero', 'AnhThư_ss'
+  ],
+  epic: [
+    // cũ
+    'Thần Thoại Cổ Đại', 'Kẻ Viết Lại Định Mệnh', 'Thiên Khải', 'Tinh Hà Bất Diệt',
+    'EternalFlame', 'CelestialX', 'AstralHunter', 'VoidWalker', 'Phán Quyết Thiên Hà', 'Bất Tử Giả',
+    // mới
+    'Huy_Celestial', 'Mai_Ly', 'Tuấn_Astral', 'Nhi_Void', 'Kiệt_Star',
+    'Thảo_X', 'Bình_Eternal', 'Linh_Galaxy', 'Đạt_Nova', 'Yến_ss'
+  ],
+  legend: [
+    // cũ
+    'Đấng Sáng Thế', 'Chúa Tể Vũ Trụ', 'Thần Chủ Tối Thượng', 'Vô Cực Chi Vương',
+    'GalaxyOverlord', 'OriginZero', 'TheFinalOne', 'EternalKing', 'Đỉnh Cao Huyền Thoại', 'Apex_Ω',
+    // mới
+    'Minh_Legend', 'Hà_Origin', 'Quân_Final', 'Ngọc_Apex', 'Tuấn_Ω',
+    'Lan_Galaxy', 'Đức_King', 'Vy_Eternal', 'Khoa_Zero', 'Anh_ss'
+  ]
+};
 function randomOpponentName(){
-  const names = [
-    // Danh sách gốc của bạn
-    'Kẻ Lang Thang',
-    'Chiến Binh Bóng Tối',
-    'Đấu Sĩ Ẩn Danh',
-    'OBEY Challenger',
-    'Hắc Kiếm Sĩ',
-    'Chiến Tướng Vô Danh',
-    'Bóng Ma Chiến Trường',
-    'Thợ Săn Sao',
-    'Cuồng Chiến Giả',
-    'Vệ Binh Hoàng Hôn',
-    
-    // Tên tiếng Anh kiểu bot game / người chơi thật
-    'Alex_99',
-    'John Wick',
-    'ShadowFox',
-    'NightWalker',
-    'GhostRider',
-    'ViperX',
-    'ZeroCool',
-    'DarkKnight',
-    'Skyline',
-    'BlazeRunner',
-    'CyberPunk',
-    'TitanFall',
-    'LoneWolf',
-    'StormBreaker',
-    'ApexPredator'
-];
+  const rankKey=currentRank()?.key||'newbie';
+  const names=BOT_NAMES_BY_RANK[rankKey]||BOT_NAMES_BY_RANK.newbie;
   return names[randInt(0,names.length-1)];
 }
 function renderSearchingOpponent(card, opponentName){
@@ -2363,6 +2433,93 @@ function markBattleForExit(){
 }
 window.addEventListener('beforeunload',markBattleForExit);
 window.addEventListener('pagehide',markBattleForExit);
+
+// Video performance manager: tối đa 16 video phát cùng lúc; video ngoài màn hình
+// chỉ giữ khung hình tĩnh, và chỉ tải nguồn khi thẻ được đưa vào vùng nhìn thấy.
+(function initLazyVideoManager(){
+  const MAX_PLAYING_VIDEOS = 16;
+  const visibleVideos = new Set();
+  const loadedVideos = new WeakSet();
+  let refreshQueued = false;
+
+  function allVideos(){
+    return [...document.querySelectorAll("video[data-lazy-video-src]")];
+  }
+  function loadVideoFrame(video){
+    if(loadedVideos.has(video)) return;
+    const src=video.dataset.lazyVideoSrc;
+    if(!src) return;
+    loadedVideos.add(video);
+    video.preload="metadata";
+    video.src=src;
+    video.load();
+    const freezeAtFirstFrame=()=>{
+      try{ video.currentTime=0; }catch(e){}
+      video.pause();
+    };
+    if(video.readyState>=2) freezeAtFirstFrame();
+    else video.addEventListener("loadeddata",freezeAtFirstFrame,{once:true});
+  }
+  function refreshPlayback(){
+    refreshQueued=false;
+    const active=[...visibleVideos].filter(v=>v.isConnected);
+    // Prioritize currently visible videos in DOM order, with a hard cap of 16.
+    const allowed=new Set(active.slice(0,MAX_PLAYING_VIDEOS));
+    allVideos().forEach(v=>{
+      if(!v.isConnected) return;
+      if(allowed.has(v)){
+        loadVideoFrame(v);
+        if(v.dataset.videoPlaying!=="1"){
+          v.dataset.videoPlaying="1";
+          const start=()=>{ if(visibleVideos.has(v)&&allowed.has(v)) v.play().catch(()=>{}); };
+          if(v.readyState>=2) start();
+          else v.addEventListener("loadeddata",start,{once:true});
+        }else if(v.paused) v.play().catch(()=>{});
+      }else{
+        if(!v.paused) v.pause();
+        v.dataset.videoPlaying="0";
+        // Keep its last frame as a static image; never download unseen video cards.
+      }
+    });
+  }
+  function scheduleRefresh(){
+    if(refreshQueued) return;
+    refreshQueued=true;
+    requestAnimationFrame(refreshPlayback);
+  }
+  if("IntersectionObserver" in window){
+    const observer=new IntersectionObserver(entries=>{
+      entries.forEach(entry=>{
+        const v=entry.target;
+        if(entry.isIntersecting){
+          visibleVideos.add(v);
+          loadVideoFrame(v);
+        }else{
+          visibleVideos.delete(v);
+          if(!v.paused) v.pause();
+          v.dataset.videoPlaying="0";
+        }
+      });
+      scheduleRefresh();
+    },{root:null,rootMargin:"80px",threshold:0.01});
+    const scan=()=>{
+      allVideos().forEach(v=>{if(!v.dataset.videoObserved){v.dataset.videoObserved="1";observer.observe(v)}});
+    };
+    new MutationObserver(scan).observe(document.documentElement,{childList:true,subtree:true});
+    if(document.readyState==="loading") document.addEventListener("DOMContentLoaded",scan,{once:true});
+    else scan();
+    window.addEventListener("scroll",scheduleRefresh,{passive:true});
+    window.addEventListener("resize",scheduleRefresh,{passive:true});
+  }else{
+    // Fallback browsers: no video autoplay, preserving static/low-load behavior.
+    document.addEventListener("play",e=>{
+      if(e.target instanceof HTMLVideoElement){
+        const playing=allVideos().filter(v=>!v.paused);
+        if(playing.length>MAX_PLAYING_VIDEOS){e.target.pause();e.target.dataset.videoPlaying="0";}
+      }
+    },true);
+  }
+})();
 
 window.addEventListener("DOMContentLoaded",()=>{
   loadData();

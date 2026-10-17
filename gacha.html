@@ -4507,13 +4507,13 @@ function renderMedia(
 
     return `
       <video
-        src="${char.mediaUrl}"
-        autoplay
-        loop
+        data-lazy-video-src="${char.mediaUrl}"
         muted
+        loop
         playsinline
-        preload="metadata"
-        class="${cls}"
+        preload="none"
+        class="${cls} lazy-managed-video"
+        aria-label="${char.name || "Character"}"
       ></video>
     `;
 
@@ -4530,6 +4530,162 @@ function renderMedia(
   `;
 
 }
+
+
+/* =========================================================
+   VIDEO PERFORMANCE MANAGER
+   - Tối đa 15 video phát đồng thời.
+   - Chỉ tải video khi nằm trong vùng nhìn thấy.
+   - Video ra ngoài vùng nhìn thấy sẽ dừng và giữ khung hình hiện tại.
+   - Không thay đổi dữ liệu thẻ hoặc thuật toán game.
+========================================================= */
+(function initVideoPerformanceManager() {
+  const MAX_ACTIVE_VIDEOS = 15;
+  const visibleVideos = new Set();
+  const knownVideos = new Set();
+  let refreshQueued = false;
+
+  function getVideos() {
+    return Array.from(document.querySelectorAll("video.lazy-managed-video"));
+  }
+
+  function queueRefresh() {
+    if (refreshQueued) return;
+    refreshQueued = true;
+    requestAnimationFrame(() => {
+      refreshQueued = false;
+      refreshPlayback();
+    });
+  }
+
+  function loadVideo(video) {
+    if (video.dataset.lazyLoaded === "1") return;
+    const source = video.dataset.lazyVideoSrc;
+    if (!source) return;
+    video.dataset.lazyLoaded = "1";
+    video.src = source;
+    video.load();
+  }
+
+  function keepStaticFrame(video) {
+    try { video.pause(); } catch (_) {}
+  }
+
+  function refreshPlayback() {
+    const visible = getVideos().filter(video =>
+      visibleVideos.has(video) &&
+      video.isConnected &&
+      video.getClientRects().length > 0
+    );
+
+    // Pause every video first, so the active count cannot exceed the limit.
+    for (const video of getVideos()) {
+      if (!visible.includes(video)) keepStaticFrame(video);
+    }
+
+    const allowed = new Set(visible.slice(0, MAX_ACTIVE_VIDEOS));
+    for (const video of visible) {
+      if (!allowed.has(video)) {
+        keepStaticFrame(video);
+        continue;
+      }
+
+      loadVideo(video);
+      if (video.dataset.lazyReady === "1") {
+        const playPromise = video.play();
+        if (playPromise && typeof playPromise.catch === "function") {
+          playPromise.catch(() => {});
+        }
+      } else if (video.dataset.lazyWaiting !== "1") {
+        video.dataset.lazyWaiting = "1";
+        video.addEventListener("loadeddata", function onReady() {
+          video.removeEventListener("loadeddata", onReady);
+          video.dataset.lazyReady = "1";
+          delete video.dataset.lazyWaiting;
+          // Re-check visibility and the cap after asynchronous loading.
+          queueRefresh();
+        }, { once: true });
+      }
+    }
+  }
+
+  function registerVideos(root) {
+    const candidates = [];
+    if (root instanceof HTMLVideoElement && root.classList.contains("lazy-managed-video")) {
+      candidates.push(root);
+    }
+    if (root && root.querySelectorAll) {
+      candidates.push(...root.querySelectorAll("video.lazy-managed-video"));
+    }
+    for (const video of candidates) {
+      if (knownVideos.has(video)) continue;
+      knownVideos.add(video);
+      video.addEventListener("error", () => {
+        delete video.dataset.lazyWaiting;
+      });
+      if (observer) observer.observe(video);
+    }
+  }
+
+  const observer = ("IntersectionObserver" in window)
+    ? new IntersectionObserver(entries => {
+        for (const entry of entries) {
+          if (entry.isIntersecting && entry.intersectionRatio > 0) {
+            visibleVideos.add(entry.target);
+          } else {
+            visibleVideos.delete(entry.target);
+            keepStaticFrame(entry.target);
+          }
+        }
+        queueRefresh();
+      }, { root: null, rootMargin: "0px", threshold: 0.01 })
+    : null;
+
+  function fallbackVisibilityCheck() {
+    for (const video of getVideos()) {
+      const rect = video.getBoundingClientRect();
+      const onScreen = rect.bottom > 0 && rect.right > 0 &&
+        rect.top < window.innerHeight && rect.left < window.innerWidth;
+      if (onScreen) visibleVideos.add(video);
+      else {
+        visibleVideos.delete(video);
+        keepStaticFrame(video);
+      }
+    }
+    queueRefresh();
+  }
+
+  const mutationObserver = new MutationObserver(records => {
+    for (const record of records) {
+      for (const node of record.addedNodes) {
+        if (node.nodeType === 1) registerVideos(node);
+      }
+    }
+    if (!observer) fallbackVisibilityCheck();
+    else queueRefresh();
+  });
+
+  function start() {
+    registerVideos(document);
+    mutationObserver.observe(document.documentElement, { childList: true, subtree: true });
+    if (!observer) fallbackVisibilityCheck();
+    window.addEventListener("scroll", observer ? queueRefresh : fallbackVisibilityCheck, { passive: true });
+    window.addEventListener("resize", observer ? queueRefresh : fallbackVisibilityCheck, { passive: true });
+    document.addEventListener("visibilitychange", () => {
+      if (document.hidden) {
+        for (const video of getVideos()) keepStaticFrame(video);
+      } else {
+        observer ? queueRefresh() : fallbackVisibilityCheck();
+      }
+    });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", start, { once: true });
+  } else {
+    start();
+  }
+})();
 
 
 /* =========================================================
