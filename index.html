@@ -1,0 +1,3132 @@
+
+
+<!doctype html>
+
+<html lang="vi">
+
+<head>
+
+<meta charset="utf-8">
+
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<meta name="theme-color" content="#080b15">
+
+<meta name="color-scheme" content="dark">
+
+<title>Khởi động game</title>
+
+
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&family=Noto+Sans:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+
+
+<style>
+
+:root {
+
+  color-scheme: dark;
+
+  --gold: #fbbf24;
+
+  --gold2: #f97316;
+
+  --panel: rgba(9,12,22,.9);
+
+}
+
+
+
+* {
+
+  box-sizing: border-box;
+
+}
+
+
+
+html, body {
+
+  margin: 0;
+
+  min-height: 100%;
+
+  font-family: "Be Vietnam Pro","Noto Sans",Arial,sans-serif;
+
+  color: #f8fafc;
+
+  background: #080b15;
+
+}
+
+
+
+body {
+
+  min-height: 100vh;
+
+  min-height: 100dvh;
+
+  overflow-x: hidden;
+
+}
+
+
+
+button, input {
+
+  font: inherit;
+
+}
+
+
+
+button {
+
+  -webkit-tap-highlight-color: transparent;
+
+}
+
+
+
+/* =========================
+
+   LOGO NHÀ PHÁT TRIỂN
+
+========================= */
+
+
+
+.developer-intro {
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 50;
+
+  display: grid;
+
+  place-items: center;
+
+  background: #020204;
+
+  opacity: 1;
+
+  visibility: visible;
+
+  transition: opacity .9s ease, visibility .9s ease;
+
+}
+
+
+
+.developer-intro.fade {
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+}
+
+
+
+.dev-logo {
+
+  display: flex;
+
+  flex-direction: column;
+
+  align-items: center;
+
+  gap: 15px;
+
+  text-align: center;
+
+  animation: devLogoIn 1s cubic-bezier(.2,.8,.2,1) both;
+
+}
+
+
+
+.dev-emblem {
+  display: block;
+  width: 94px;
+  height: 94px;
+  object-fit: cover;
+  object-position: center;
+  border: 2px solid #fbbf24;
+  border-radius: 50%;
+  background: #050505;
+  box-shadow: 0 0 0 5px rgba(251,191,36,.12),
+              0 0 28px rgba(251,191,36,.38),
+              0 0 45px #fbbf241b;
+}
+
+
+
+.dev-brand {
+
+  font-size: clamp(14px,3vw,18px);
+
+  font-weight: 900;
+
+  letter-spacing: .38em;
+
+  color: #f8fafc;
+
+  text-transform: uppercase;
+
+}
+
+
+
+.dev-caption {
+
+  font-size: 9px;
+
+  font-weight: 700;
+
+  letter-spacing: .42em;
+
+  color: #a1a1aa;
+
+  text-transform: uppercase;
+
+}
+
+
+
+.dev-line {
+
+  width: 100px;
+
+  height: 1px;
+
+  background: linear-gradient(90deg,transparent,#fbbf24,transparent);
+
+  margin-top: 2px;
+
+}
+
+
+
+@keyframes devLogoIn {
+
+  from {
+
+    opacity: 0;
+
+    transform: translateY(8px) scale(.97);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+
+  }
+
+}
+
+
+
+/* =========================
+
+   MÀN HÌNH KHỞI ĐỘNG
+
+========================= */
+
+
+
+.splash {
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: 5;
+
+  background: #080b15;
+
+  display: flex;
+
+  align-items: flex-end;
+
+  justify-content: center;
+
+  overflow: hidden;
+
+  opacity: 1;
+
+  visibility: visible;
+
+  transition: opacity .55s ease, visibility .55s ease;
+
+}
+
+
+
+.splash.done {
+
+  opacity: 0;
+
+  visibility: hidden;
+
+  pointer-events: none;
+
+}
+
+
+
+.splash video {
+
+  position: absolute;
+
+  inset: 0;
+
+  width: 100%;
+
+  height: 100%;
+
+  object-fit: cover;
+
+  opacity: .86;
+
+}
+
+
+
+.splash:after {
+
+  content: "";
+
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(
+
+    180deg,
+
+    rgba(3,5,12,.12),
+
+    rgba(3,5,12,.25) 38%,
+
+    rgba(3,5,12,.94) 100%
+
+  );
+
+  pointer-events: none;
+
+}
+
+
+
+.loading {
+
+  position: relative;
+
+  z-index: 1;
+
+  width: min(680px,calc(100% - 40px));
+
+  margin: 0 auto max(8vh,38px);
+
+  text-align: center;
+
+}
+
+
+
+.brand {
+  display: block;
+  width: min(300px, 72vw);
+  max-height: 120px;
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto 8px;
+  filter: drop-shadow(0 0 12px rgba(251,191,36,.18));
+  font-size: 11px;
+
+  letter-spacing: .36em;
+
+  font-weight: 900;
+
+  color: var(--gold);
+
+  text-transform: uppercase;
+
+}
+
+
+
+.loading h1 {
+
+  font-size: clamp(25px,5vw,44px);
+
+  line-height: 1.2;
+
+  letter-spacing: .02em;
+
+  margin: 12px 0 10px;
+
+  font-weight: 900;
+
+  text-shadow: 0 3px 28px #000;
+
+}
+
+
+
+.load-copy {
+
+  color: #cbd5e1;
+
+  font-size: 12px;
+
+  letter-spacing: .06em;
+
+  min-height: 20px;
+
+}
+
+
+
+.track {
+
+  height: 8px;
+
+  margin: 18px 0 10px;
+
+  padding: 1px;
+
+  border: 1px solid #fbbf2466;
+
+  border-radius: 99px;
+
+  background: #090b13c9;
+
+  box-shadow: 0 0 28px #f59e0b1c;
+
+  overflow: hidden;
+
+}
+
+
+
+.bar {
+
+  height: 100%;
+
+  width: 0%;
+
+  border-radius: 99px;
+
+  background: linear-gradient(90deg,#f59e0b,#fde68a,#ea580c);
+
+  box-shadow: 0 0 18px #fbbf24;
+
+  transition: width .18s linear;
+
+}
+
+
+
+.load-meta {
+
+  display: flex;
+
+  justify-content: space-between;
+
+  gap: 12px;
+
+  font-size: 10px;
+
+  color: #94a3b8;
+
+  letter-spacing: .12em;
+
+  font-weight: 700;
+
+}
+
+
+
+/* =========================
+
+   CHỌN SERVER SAU KHỞI ĐỘNG
+
+========================= */
+
+.server-picker {
+
+  margin-top: 24px;
+
+  text-align: left;
+
+  animation: startBtnIn .45s ease both;
+
+}
+
+.server-picker label {
+
+  display: block;
+
+  margin-bottom: 9px;
+
+  color: #f8d98a;
+
+  font-size: 11px;
+
+  font-weight: 900;
+
+  letter-spacing: .2em;
+
+}
+
+.server-select {
+
+  width: 100%;
+
+  min-height: 52px;
+
+  padding: 0 16px;
+
+  border: 1px solid #e8b85b99;
+
+  border-radius: 14px;
+
+  outline: none;
+
+  background: linear-gradient(135deg,rgba(25,30,48,.96),rgba(11,15,28,.98));
+
+  color: #fff4d6;
+
+  font: 700 14px 'Be Vietnam Pro','Noto Sans',sans-serif;
+
+  box-shadow: inset 0 1px 0 #ffffff12, 0 0 24px #f59e0b12;
+
+}
+
+.server-select:focus { border-color: #ffd878; box-shadow: 0 0 0 3px #fbbf2424; }
+
+.server-select option { background: #111827; color: #fff4d6; }
+
+
+
+.loading.ready {
+
+  align-self: center;
+
+  margin-bottom: 0;
+
+  padding: clamp(24px,4vw,42px);
+
+  border: 1px solid #e8b85b80;
+
+  border-radius: 24px;
+
+  background: linear-gradient(145deg,rgba(8,12,24,.88),rgba(20,14,25,.82));
+
+  box-shadow: 0 0 0 5px #fbbf2408, 0 20px 80px #0008, 0 0 38px #f59e0b12;
+
+  backdrop-filter: blur(12px);
+
+}
+
+.loading.ready h1,
+
+.loading.ready .load-copy,
+
+.loading.ready .track,
+
+.loading.ready .load-meta { display: none; }
+
+.loading.ready .brand {
+
+  display: block;
+
+  margin-bottom: 8px;
+
+  font-size: clamp(16px,2.5vw,22px);
+
+  letter-spacing: .32em;
+
+  text-shadow: 0 0 24px #fbbf2466;
+
+}
+
+.loading.ready .server-picker { margin-top: 22px; }
+
+.loading.ready .start-btn { margin-top: 14px; }
+
+
+
+/* =========================
+
+   NÚT BẮT ĐẦU GAME
+
+========================= */
+
+
+
+.start-btn {
+
+  width: 100%;
+
+  margin-top: 24px;
+
+  padding: 17px 20px;
+
+  border: 1px solid #fde68a;
+
+  border-radius: 16px;
+
+  background: linear-gradient(100deg,#fbbf24,#f97316);
+
+  color: #170d03;
+
+  font-size: 14px;
+
+  font-weight: 900;
+
+  letter-spacing: .04em;
+
+  cursor: pointer;
+
+  box-shadow: 0 8px 35px #f59e0b30;
+
+  animation: startBtnIn .45s ease both;
+
+  transition: transform .2s,filter .2s,box-shadow .2s;
+
+}
+
+
+
+.start-btn:hover {
+
+  filter: brightness(1.1);
+
+  transform: translateY(-2px);
+
+  box-shadow: 0 12px 42px #f59e0b45;
+
+}
+
+
+
+.start-btn:active {
+
+  transform: scale(.98);
+
+}
+
+
+
+.start-btn:disabled {
+
+  opacity: .65;
+
+  cursor: wait;
+
+  transform: none;
+
+}
+
+
+
+@keyframes startBtnIn {
+
+  from {
+
+    opacity: 0;
+
+    transform: translateY(12px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+  }
+
+}
+
+
+
+/* =========================
+
+   GIAO DIỆN TẠO NHÂN VẬT
+
+========================= */
+
+
+
+.app {
+
+  min-height: 100vh;
+
+  min-height: 100dvh;
+
+  display: none;
+
+  place-items: center;
+
+  padding: 24px 16px;
+
+  background:
+
+    radial-gradient(ellipse at 50% 0,#7c2d1235,transparent 45%),
+
+    radial-gradient(ellipse at 0 100%,#312e8130,transparent 38%),
+
+    linear-gradient(145deg,#090b12,#17111a 55%,#090b12);
+
+}
+
+
+
+.app.show {
+
+  display: grid;
+
+}
+
+
+
+.panel {
+
+  width: 100%;
+
+  max-width: 510px;
+
+  padding: clamp(24px,5vw,42px);
+
+  border-radius: 28px;
+
+  background: linear-gradient(145deg,#151923f2,#090b12f7);
+
+  border: 1px solid #f59e0b45;
+
+  box-shadow: 0 20px 80px #0009,inset 0 1px #ffffff0c;
+
+  animation: rise .5s ease both;
+
+}
+
+
+
+.welcome-icon {
+
+  width: 66px;
+
+  height: 66px;
+
+  display: grid;
+
+  place-items: center;
+
+  margin: 0 auto 18px;
+
+  border-radius: 22px;
+
+  border: 1px solid #fbbf2466;
+
+  background: linear-gradient(145deg,#fbbf2426,#ea580c12);
+
+  color: #fcd34d;
+
+  font-size: 28px;
+
+  box-shadow: 0 0 40px #f59e0b12;
+
+}
+
+
+
+.panel-head {
+
+  text-align: center;
+
+}
+
+
+
+.panel-head h2 {
+
+  font-size: clamp(27px,6vw,38px);
+
+  font-weight: 900;
+
+  line-height: 1.2;
+
+  margin: 10px 0;
+
+}
+
+
+
+.panel-head p {
+
+  font-size: 13px;
+
+  line-height: 1.8;
+
+  color: #aab4c5;
+
+  margin: 12px 0 0;
+
+}
+
+
+
+.divider {
+
+  height: 1px;
+
+  margin: 26px 0;
+
+  background: linear-gradient(90deg,transparent,#fbbf2477,transparent);
+
+}
+
+
+
+label {
+
+  display: block;
+
+  font-size: 11px;
+
+  font-weight: 800;
+
+  letter-spacing: .08em;
+
+  color: #d1d5db;
+
+  margin-bottom: 9px;
+
+}
+
+
+
+.field {
+
+  width: 100%;
+
+  padding: 15px 16px;
+
+  border-radius: 15px;
+
+  background: #05070c;
+
+  border: 1px solid #475569;
+
+  color: #f8fafc;
+
+  outline: none;
+
+  font-size: 15px;
+
+}
+
+
+
+.field::placeholder {
+
+  color: #64748b;
+
+}
+
+
+
+.field:focus {
+
+  border-color: var(--gold);
+
+  box-shadow: 0 0 0 3px #fbbf241f;
+
+}
+
+
+
+.btn {
+
+  width: 100%;
+
+  margin-top: 16px;
+
+  padding: 15px 18px;
+
+  border: 0;
+
+  border-radius: 15px;
+
+  background: linear-gradient(100deg,#fbbf24,#ea580c);
+
+  color: #170d03;
+
+  font-weight: 900;
+
+  cursor: pointer;
+
+  transition: transform .2s,filter .2s;
+
+}
+
+
+
+.btn:hover {
+
+  filter: brightness(1.08);
+
+  transform: translateY(-1px);
+
+}
+
+
+
+.btn:disabled {
+
+  opacity: .65;
+
+  cursor: wait;
+
+  transform: none;
+
+}
+
+
+
+.message {
+
+  font-size: 12px;
+
+  line-height: 1.7;
+
+  margin: 12px 2px 0;
+
+}
+
+
+
+.hint {
+
+  text-align: center;
+
+  font-size: 10px;
+
+  line-height: 1.8;
+
+  color: #64748b;
+
+  margin: 18px 0 0;
+
+}
+
+
+
+.hidden {
+
+  display: none !important;
+
+}
+
+
+
+/* =========================
+
+   NÚT NHẠC
+
+========================= */
+
+
+
+.music-toggle {
+
+  position: fixed;
+
+  right: 14px;
+
+  top: 14px;
+
+  z-index: 60;
+
+  display: inline-flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  gap: 5px;
+
+  padding: 6px 9px;
+
+  border: 1px solid #94a3b833;
+
+  border-radius: 10px;
+
+  background: #090b12a8;
+
+  backdrop-filter: blur(8px);
+
+  color: #cbd5e1;
+
+  font-size: 9px;
+
+  font-weight: 600;
+
+  opacity: .72;
+
+  cursor: pointer;
+
+  transition: *background* .2s,border-color .2s,opacity .2s;
+
+}
+
+
+
+.music-toggle:hover {
+
+  background: #090b12e8;
+
+  border-color: #94a3b866;
+
+  opacity: 1;
+
+}
+
+
+
+.music-toggle .music-icon {
+
+  font-size: 13px;
+
+}
+
+
+
+@keyframes rise {
+
+  from {
+
+    opacity: 0;
+
+    transform: translateY(12px);
+
+  }
+
+  to {
+
+    opacity: 1;
+
+    transform: translateY(0);
+
+  }
+
+}
+
+
+
+@media(max-width:600px) {
+
+  .loading {
+
+    width: calc(100% - 36px);
+
+    margin-bottom: max(7vh,30px);
+
+  }
+
+
+
+  .loading h1 {
+
+    font-size: 29px;
+
+  }
+
+
+
+  .load-copy {
+
+    font-size: 11px;
+
+  }
+
+
+
+  .panel {
+
+    border-radius: 24px;
+
+  }
+
+
+
+  .splash video {
+
+    object-position: center;
+
+  }
+
+
+
+  .brand {
+
+    letter-spacing: .28em;
+
+  }
+
+
+
+  .music-toggle {
+
+    top: 10px;
+
+    right: 10px;
+
+    padding: 6px 8px;
+
+    gap: 4px;
+
+    font-size: 9px;
+
+  }
+
+
+
+  .load-meta {
+
+    font-size: 9px;
+
+    letter-spacing: .06em;
+
+  }
+
+}
+
+
+
+/* =========================
+
+   NÂNG CẤP GIAO DIỆN CHÀO MỪNG TÂN THỦ
+
+   Chỉ tinh chỉnh CSS, giữ nguyên HTML và toàn bộ logic dữ liệu.
+
+========================= */
+
+.app {
+
+  position: relative;
+
+  isolation: isolate;
+
+  background:
+
+    radial-gradient(ellipse at 50% 8%, rgba(251,191,36,.12), transparent 38%),
+
+    radial-gradient(ellipse at 8% 88%, rgba(99,102,241,.12), transparent 34%),
+
+    linear-gradient(145deg,#070a12 0%,#101522 48%,#090b13 100%);
+
+}
+
+
+
+.app::before {
+
+  content: "";
+
+  position: fixed;
+
+  inset: 0;
+
+  z-index: -1;
+
+  pointer-events: none;
+
+  opacity: .22;
+
+  background-image: linear-gradient(rgba(255,255,255,.035) 1px, transparent 1px),
+
+                    linear-gradient(90deg, rgba(255,255,255,.035) 1px, transparent 1px);
+
+  background-size: 38px 38px;
+
+  mask-image: linear-gradient(to bottom, black, transparent 85%);
+
+}
+
+
+
+.panel {
+
+  position: relative;
+
+  overflow: hidden;
+
+  padding: clamp(26px,5vw,44px);
+
+  border: 1px solid rgba(251,191,36,.28);
+
+  border-radius: 30px;
+
+  background: linear-gradient(145deg,rgba(23,28,42,.97),rgba(8,11,19,.98) 72%);
+
+  box-shadow: 0 28px 90px rgba(0,0,0,.55),
+
+              0 0 0 1px rgba(255,255,255,.025),
+
+              inset 0 1px rgba(255,255,255,.08);
+
+}
+
+
+
+.panel::before {
+
+  content: "";
+
+  position: absolute;
+
+  top: 0;
+
+  left: 16%;
+
+  right: 16%;
+
+  height: 1px;
+
+  background: linear-gradient(90deg,transparent,rgba(253,230,138,.8),transparent);
+
+  pointer-events: none;
+
+}
+
+
+
+.welcome-icon {
+
+  width: 72px;
+
+  height: 72px;
+
+  margin-bottom: 22px;
+
+  border-radius: 23px;
+
+  border: 1px solid rgba(251,191,36,.45);
+
+  background: linear-gradient(145deg,rgba(251,191,36,.17),rgba(234,88,12,.06));
+
+  color: #fde68a;
+
+  font-size: 29px;
+
+  box-shadow: 0 12px 32px rgba(0,0,0,.2), inset 0 1px rgba(255,255,255,.08);
+
+}
+
+
+
+.panel-head .brand {
+
+  display: inline-block;
+
+  padding: 7px 11px;
+
+  border: 1px solid rgba(251,191,36,.2);
+
+  border-radius: 999px;
+
+  background: rgba(251,191,36,.055);
+
+  font-size: 9px;
+
+  letter-spacing: .22em;
+
+}
+
+
+
+.panel-head h2 {
+
+  margin: 16px 0 12px;
+
+  font-size: clamp(25px,5.5vw,36px);
+
+  letter-spacing: -.035em;
+
+  text-wrap: balance;
+
+  background: linear-gradient(180deg,#fff7d6 0%,#f8fafc 72%);
+
+  -webkit-background-clip: text;
+
+  background-clip: text;
+
+  color: transparent;
+
+}
+
+
+
+.panel-head p {
+
+  max-width: 365px;
+
+  margin: 0 auto;
+
+  color: #aab4c5;
+
+  font-size: 12px;
+
+  line-height: 1.9;
+
+}
+
+
+
+.divider {
+
+  margin: 25px 0;
+
+  background: linear-gradient(90deg,transparent,rgba(148,163,184,.28),transparent);
+
+}
+
+
+
+label {
+
+  margin-bottom: 10px;
+
+  color: #cbd5e1;
+
+  font-size: 10px;
+
+  letter-spacing: .1em;
+
+}
+
+
+
+.field {
+
+  padding: 16px 17px;
+
+  border-radius: 14px;
+
+  border-color: #343d50;
+
+  background: rgba(3,6,13,.72);
+
+  box-shadow: inset 0 1px 3px rgba(0,0,0,.22);
+
+  transition: border-color .2s, box-shadow .2s, *background* .2s;
+
+}
+
+
+
+.field:focus {
+
+  border-color: rgba(251,191,36,.78);
+
+  background: rgba(5,8,16,.95);
+
+  box-shadow: 0 0 0 3px rgba(251,191,36,.1), 0 0 24px rgba(251,191,36,.055);
+
+}
+
+
+
+.btn {
+
+  min-height: 50px;
+
+  margin-top: 17px;
+
+  border: 1px solid rgba(255,237,175,.65);
+
+  border-radius: 14px;
+
+  background: linear-gradient(105deg,#fbbf24 0%,#f59e0b 55%,#ea580c 100%);
+
+  box-shadow: 0 8px 24px rgba(234,88,12,.16), inset 0 1px rgba(255,255,255,.24);
+
+  letter-spacing: .025em;
+
+}
+
+
+
+.btn:hover {
+
+  filter: brightness(1.07);
+
+  box-shadow: 0 11px 30px rgba(234,88,12,.24), inset 0 1px rgba(255,255,255,.28);
+
+}
+
+
+
+.hint {
+
+  max-width: 340px;
+
+  margin: 17px auto 0;
+
+  color: #778196;
+
+  font-size: 10px;
+
+  line-height: 1.8;
+
+}
+
+
+
+@media(max-width:600px) {
+
+  .panel {
+
+    padding: 27px 22px 25px;
+
+    border-radius: 25px;
+
+  }
+
+
+
+  .welcome-icon {
+
+    width: 64px;
+
+    height: 64px;
+
+    border-radius: 20px;
+
+    margin-bottom: 19px;
+
+  }
+
+
+
+  .panel-head h2 {
+
+    margin-top: 14px;
+
+    font-size: clamp(24px,7vw,31px);
+
+  }
+
+}
+
+
+
+@media(prefers-reduced-motion:reduce) {
+
+  *,*:before,*:after {
+
+    animation-duration: .01ms !important;
+
+    transition-duration: .01ms !important;
+
+  }
+
+}
+
+
+
+/* =========================
+
+   TAI GIRL TRÒ CHUYỆN CÙNG NGƯỜI CHƠI
+
+========================= */
+
+.tutorial-guide { display:grid; grid-template-columns:minmax(145px,.78fr) minmax(0,1.35fr); gap:20px; align-items:center; margin:0 0 18px; }
+
+/* Khung thẻ Tai Girl theo đúng tỉ lệ dọc 3:4, tông vàng mật ong – hồng đào */
+
+.guide-portrait { position:relative; width:100%; max-width:230px; aspect-ratio:3 / 4; min-height:0; justify-self:center; display:grid; place-items:center; overflow:hidden; isolation:isolate; border:2px solid transparent; border-radius:18px; background:linear-gradient(155deg,#fff1c2 0%,#f9a8a8 28%,#d97706 62%,#fff0b3 100%) border-box; box-shadow:0 0 0 1px rgba(255,225,160,.42),0 0 12px rgba(251,146,60,.26),0 0 24px rgba(244,114,182,.16),inset 0 0 0 1px rgba(255,255,255,.55); padding:4px; }
+
+.guide-portrait:before { content:""; position:absolute; inset:4px; z-index:2; pointer-events:none; border:1px solid rgba(255,238,190,.82); border-radius:13px; box-shadow:inset 0 0 12px rgba(255,209,133,.18); }
+
+.guide-portrait:after { content:"✦"; position:absolute; z-index:3; top:7px; right:9px; pointer-events:none; color:#fff2b8; font-size:17px; text-shadow:0 0 7px #fb923c,0 0 12px #f472b6; }
+
+.guide-portrait .guide-media { width:100%; height:100%; min-height:0; object-fit:cover; object-position:center; position:absolute; inset:0; border-radius:13px; background:radial-gradient(ellipse at 50% 20%,#f9a8a866,transparent 62%),linear-gradient(160deg,#30202b,#171323); }
+
+.guide-portrait .guide-fallback { padding:12px; color:#fcd34d; text-align:center; font-size:12px; font-weight:800; }
+
+.guide-copy { min-width:0; text-align:left; }
+
+.guide-name { display:inline-flex; align-items:center; gap:7px; margin:0; font-size:clamp(19px,4vw,25px); line-height:1.2; font-weight:900; color:#fde68a; overflow-wrap:anywhere; }
+
+.guide-name:after { content:'✦'; font-size:13px; color:#fb923c; }
+
+.guide-dialogue { position:relative; margin-top:13px; padding:17px 18px; min-height:132px; color:#f1f5f9; font-size:13px; line-height:1.9; border:1px solid rgba(148,163,184,.18); border-radius:18px 18px 18px 5px; background:linear-gradient(145deg,rgba(30,41,59,.78),rgba(15,23,42,.68)); box-shadow:inset 0 1px rgba(255,255,255,.04); }
+
+.guide-dialogue:before { content:'“'; position:absolute; top:-13px; left:12px; color:#fbbf24; font-size:36px; line-height:1; font-weight:900; opacity:.85; }
+
+.guide-step { display:none; }
+
+.guide-next { margin-top:14px; width:100%; min-height:46px; border:1px solid rgba(251,191,36,.42); border-radius:14px; color:#fff7d6; font-size:12px; font-weight:900; background:linear-gradient(120deg,#92400e,#b45309 55%,#78350f); box-shadow:0 8px 22px #f59e0b16; cursor:pointer; transition:transform .18s,filter .18s; }
+
+.guide-next:hover { filter:brightness(1.12); transform:translateY(-1px); }
+
+#name-form.guide-hidden, .hint.guide-hidden { display:none; }
+
+#name-divider { display:none; }
+
+#name-form:not(.guide-hidden) { animation:guideFormIn .35s ease both; }
+
+@keyframes guideFormIn { from{opacity:0;transform:translateY(8px)} to{opacity:1;transform:none} }
+
+@media(max-width:600px) { .tutorial-guide { grid-template-columns: minmax(105px,.72fr) minmax(0,1.28fr); gap:12px; } .guide-portrait { width:100%; max-width:190px; min-height:0; } .guide-portrait .guide-media { min-height:0; } .guide-dialogue { min-height:145px; padding:15px 13px; font-size:12px; line-height:1.8; } .guide-name { font-size:19px; } }
+
+@media(max-width:390px) { .tutorial-guide { grid-template-columns:1fr; gap:13px; } .guide-portrait { width:min(68vw,210px); min-height:0; max-height:none; } .guide-portrait .guide-media { min-height:0; max-height:none; } .guide-dialogue { min-height:0; } }
+
+
+
+</style>
+
+</head>
+
+
+
+<body>
+
+
+
+<!-- =========================
+
+     NHẠC NỀN
+
+     Đặt file nhạc tại assets/music.mp3
+
+========================= -->
+
+
+
+<audio id="bg-music" src="assets/audio/英雄の序曲.mp3" loop preload="auto"></audio>
+
+
+
+<button id="music-toggle" class="music-toggle" type="button"
+
+        aria-label="Bật nhạc" aria-pressed="false">
+
+  <span class="music-icon" aria-hidden="true">♫</span>
+
+  <span id="music-label">BẬT NHẠC</span>
+
+</button>
+
+
+
+<!-- =========================
+
+     LOGO NHÀ PHÁT TRIỂN
+
+========================= -->
+
+
+
+<div id="developer-intro" class="developer-intro"
+
+     aria-label="Logo nhà phát triển">
+
+  <div class="dev-logo">
+
+    <img class="dev-emblem" src="assets/logo.jpg" alt="Logo nhà phát triển">
+
+    <div class="dev-brand">LBD STUDIO</div>
+
+    <div class="dev-line"></div>
+
+    <div class="dev-caption">LAM BAO DANG · PRESENTS</div>
+
+  </div>
+
+</div>
+
+
+
+<!-- =========================
+
+     MÀN HÌNH TẢI GAME
+
+========================= -->
+
+
+
+<section id="splash" class="splash" aria-label="Đang khởi động game">
+
+
+
+  <video id="intro-video" autoplay muted loop playsinline preload="auto">
+
+    <source id="intro-source" src="assets/intro-pc.mp4" type="video/mp4">
+
+  </video>
+
+
+
+  <div class="loading">
+
+
+
+
+    <img class="brand" src="assets/logo-game.png" alt="Tên game" onerror="this.style.display='none'">
+
+
+
+    <h1>ĐANG VÀO GAME</h1>
+
+
+
+    <div id="load-copy" class="load-copy" aria-live="polite">
+
+      Đang khởi động game…
+
+    </div>
+
+
+
+    <div class="track"
+
+         role="progressbar"
+
+         aria-label="Tiến trình tải game"
+
+         aria-valuemin="0"
+
+         aria-valuemax="100"
+
+         aria-valuenow="0"
+
+         id="progress-track">
+
+      <div id="progress-bar" class="bar"></div>
+
+    </div>
+
+
+
+    <div class="load-meta">
+
+      <span id="load-stage">KHỞI TẠO HỆ THỐNG</span>
+
+      <span id="load-percent">0%</span>
+
+    </div>
+
+
+
+    <!-- Chỉ hiện lựa chọn server và nút bắt đầu sau khi khởi động xong -->
+
+    <div id="server-picker" class="server-picker hidden">
+
+      <label for="server-select">CHỌN SERVER</label>
+
+      <select id="server-select" class="server-select">
+
+        <option value="vn">🇻🇳 Việt Nam</option>
+
+        <option value="cn">🇨🇳 Trung Quốc</option>
+
+        <option value="jp">🇯🇵 Nhật Bản</option>
+
+        <option value="kr">🇰🇷 Hàn Quốc</option>
+
+        <option value="th">🇹🇭 Thái Lan</option>
+
+      </select>
+
+    </div>
+
+
+
+    <!-- Chỉ xuất hiện khi quá trình khởi động hoàn tất -->
+
+    <button id="start-game-btn" class="start-btn hidden" type="button">
+
+      BẮT ĐẦU CHIẾN TRƯỜNG →
+
+    </button>
+
+
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================
+
+     GIAO DIỆN TẠO HỒ SƠ
+
+========================= -->
+
+
+
+<main id="app" class="app">
+
+  <section class="panel">
+
+
+
+    <div class="tutorial-guide" id="tutorial-guide" aria-live="polite">
+
+      <div class="guide-portrait" id="guide-portrait">
+
+        <div class="guide-fallback">Tai Girl đang chạy tới đây nè…</div>
+
+      </div>
+
+      <div class="guide-copy">
+
+        <div class="guide-name" id="guide-name">Tai Girl</div>
+
+        <div class="guide-dialogue" id="guide-dialogue">Ê ê ê, chờ tớ với! ✨ Tai Girl đây! Có đồng đội mới rồi, vui quá đi mất! Để tớ chỉ cậu vài mẹo hay ho trước khi mình cùng quẩy ở Chiến Trường nha!</div>
+
+        <div class="guide-step" id="guide-step">1</div>
+
+        <button class="guide-next" id="guide-next" type="button">Nghe tiếp nè! ✨</button>
+
+      </div>
+
+    </div>
+
+
+
+    <div class="divider" id="name-divider"></div>
+
+
+
+    <form id="name-form" class="guide-hidden" novalidate>
+
+
+
+      <label for="character-name">
+
+        TÊN NHÂN VẬT (2–24 KÝ TỰ)
+
+      </label>
+
+
+
+      <input
+
+        id="character-name"
+
+        class="field"
+
+        type="text"
+
+        maxlength="24"
+
+        minlength="2"
+
+        autocomplete="nickname"
+
+        placeholder="Ví dụ: Lâm Bá Đạo"
+
+        required
+
+      >
+
+
+
+      <p id="message" class="message hidden" role="status" aria-live="polite"></p>
+
+
+
+      <button id="submit-btn" class="btn" type="submit">
+
+        LƯU TÊN & TIẾP TỤC →
+
+      </button>
+
+
+
+    </form>
+
+
+
+    <p class="hint guide-hidden" id="name-hint">
+
+      Tên nhân vật được sử dụng vĩnh viễn không thể đổi.
+
+    </p>
+
+
+
+  </section>
+
+</main>
+
+
+
+<script src="data/charactersVIP.js"></script>
+
+<script src="data/charactersSSS.js"></script>
+
+<script src="data/charactersSS.js"></script>
+
+<script src="data/charactersS.js"></script>
+
+<script src="data/charactersD.js"></script>
+
+<script src="data/charactersC.js"></script>
+
+<script src="data/charactersB.js"></script>
+
+<script src="data/charactersA.js"></script>
+
+<!-- Gom các bộ thẻ thành một nguồn chung để code chính đọc -->
+
+<script>
+
+  const CHARACTER_POOL = [
+
+    ...(typeof CHARACTER_POOL_A !== 'undefined' ? CHARACTER_POOL_A : []),
+
+    ...(typeof CHARACTER_POOL_B !== 'undefined' ? CHARACTER_POOL_B : []),
+
+    ...(typeof CHARACTER_POOL_C !== 'undefined' ? CHARACTER_POOL_C : []),
+
+    ...(typeof CHARACTER_POOL_D !== 'undefined' ? CHARACTER_POOL_D : []),
+
+    ...(typeof CHARACTER_POOL_S !== 'undefined' ? CHARACTER_POOL_S : []),
+
+    ...(typeof CHARACTER_POOL_SS !== 'undefined' ? CHARACTER_POOL_SS : []),
+
+    ...(typeof CHARACTER_POOL_SSS !== 'undefined' ? CHARACTER_POOL_SSS : []),
+
+    ...(typeof CHARACTER_POOL_VIP !== 'undefined' ? CHARACTER_POOL_VIP : [])
+
+  ];
+
+</script>
+
+<script>
+
+'use strict';
+
+
+
+/* ==========================================
+
+   CẤU HÌNH HỆ THỐNG
+
+========================================== */
+
+
+
+const STORAGE_NAME = 'lienanime_battle_character_name_v1';
+
+const TUTORIAL_CHARACTER_ID = 'VIP56';
+
+
+
+const RANKING_API_URL =
+
+  'https://script.google.com/macros/s/AKfycbxuHkLxZWM0pmxO32JcF7Uykf7G9rpumX3UQLCxbKmoLdUryh57QN9vRqrgS1_8CeA7GA/exec';
+
+
+
+const BANNED = [
+
+  'BanVinhVien',
+
+  'Bố tới'
+
+];
+
+
+
+const RESERVED = [
+
+  'Kẻ Lang Thang',
+
+  'Chiến Binh Bóng Tối',
+
+  'Đấu Sĩ Ẩn Danh',
+
+  'OBEY Challenger',
+
+  'Hắc Kiếm Sĩ',
+
+  'Chiến Tướng Vô Danh',
+
+  'Bóng Ma Chiến Trường',
+
+  'Thợ Săn Sao',
+
+  'Cuồng Chiến Giả',
+
+  'Vệ Binh Hoàng Hôn',
+
+  'Alex_99',
+
+  'John Wick',
+
+  'ShadowFox',
+
+  'NightWalker',
+
+  'GhostRider',
+
+  'ViperX',
+
+  'ZeroCool',
+
+  'DarkKnight',
+
+  'Skyline',
+
+  'BlazeRunner',
+
+  'CyberPunk',
+
+  'TitanFall',
+
+  'LoneWolf',
+
+  'StormBreaker',
+
+  'ApexPredator'
+
+];
+
+
+
+/* ==========================================
+
+   CÁC PHẦN TỬ GIAO DIỆN
+
+========================================== */
+
+
+
+const splash = document.getElementById('splash');
+
+const app = document.getElementById('app');
+
+
+
+const video = document.getElementById('intro-video');
+
+const source = document.getElementById('intro-source');
+
+const developerIntro = document.getElementById('developer-intro');
+
+
+
+const bar = document.getElementById('progress-bar');
+
+const percent = document.getElementById('load-percent');
+
+const stage = document.getElementById('load-stage');
+
+const copy = document.getElementById('load-copy');
+
+const track = document.getElementById('progress-track');
+
+
+
+const input = document.getElementById('character-name');
+
+const msg = document.getElementById('message');
+
+const btn = document.getElementById('submit-btn');
+
+
+
+const startGameBtn = document.getElementById('start-game-btn');
+
+const serverPicker = document.getElementById('server-picker');
+
+const serverSelect = document.getElementById('server-select');
+
+
+
+const bgMusic = document.getElementById('bg-music');
+
+const musicToggle = document.getElementById('music-toggle');
+
+const musicLabel = document.getElementById('music-label');
+
+
+
+const guidePortrait = document.getElementById('guide-portrait');
+
+const guideName = document.getElementById('guide-name');
+
+const guideDialogue = document.getElementById('guide-dialogue');
+
+const guideStep = document.getElementById('guide-step');
+
+const guideNext = document.getElementById('guide-next');
+
+const nameForm = document.getElementById('name-form');
+
+const nameHint = document.getElementById('name-hint');
+
+const nameDivider = document.getElementById('name-divider');
+
+let tutorialStep = 0;
+
+
+
+/* ==========================================
+
+   TRẠNG THÁI
+
+========================================== */
+
+
+
+let progress = 0;
+
+let startedAt = 0;
+
+let loadingStarted = false;
+
+let finished = false;
+
+let redirecting = false;
+
+let loadingTimer = null;
+
+
+
+/* ==========================================
+
+   CHUẨN HÓA TÊN
+
+========================================== */
+
+
+
+function clean(value) {
+
+  return String(value || '')
+
+    .normalize('NFC')
+
+    .trim()
+
+    .replace(/\s+/g, ' ');
+
+}
+
+
+
+function norm(value) {
+
+  return clean(value).toLocaleLowerCase('vi');
+
+}
+
+
+
+function getSavedName() {
+
+  try {
+
+    return clean(localStorage.getItem(STORAGE_NAME) || '');
+
+  } catch (error) {
+
+    return '';
+
+  }
+
+}
+
+
+
+function validSavedName(name) {
+
+  return name.length >= 2 && name.length <= 24;
+
+}
+
+
+
+function hasSavedName() {
+
+  return validSavedName(getSavedName());
+
+}
+
+
+
+/* ==========================================
+
+   VIDEO PC / MOBILE
+
+========================================== */
+
+
+
+function updateVideoForDevice() {
+
+  const isMobile = window.matchMedia(
+
+    '(max-width: 700px), (orientation: portrait) and (pointer: coarse)'
+
+  ).matches;
+
+
+
+  const next = isMobile
+
+    ? 'assets/intro-mobile.mp4'
+
+    : 'assets/intro-pc.mp4';
+
+
+
+  if (source.getAttribute('src') !== next) {
+
+    source.setAttribute('src', next);
+
+    video.load();
+
+
+
+    const playback = video.play();
+
+
+
+    if (playback && playback.catch) {
+
+      playback.catch(() => {});
+
+    }
+
+  }
+
+}
+
+
+
+updateVideoForDevice();
+
+
+
+window.addEventListener('resize', updateVideoForDevice, {
+
+  passive: true
+
+});
+
+
+
+/* ==========================================
+
+   THANH TIẾN TRÌNH
+
+========================================== */
+
+
+
+function setProgress(value, label, description) {
+
+  progress = Math.max(
+
+    progress,
+
+    Math.min(100, Number(value) || 0)
+
+  );
+
+
+
+  bar.style.width = progress + '%';
+
+  percent.textContent = Math.round(progress) + '%';
+
+
+
+  track.setAttribute(
+
+    'aria-valuenow',
+
+    String(Math.round(progress))
+
+  );
+
+
+
+  if (label) {
+
+    stage.textContent = label;
+
+  }
+
+
+
+  if (description) {
+
+    copy.textContent = description;
+
+  }
+
+}
+
+
+
+/* ==========================================
+
+   NÚT BẮT ĐẦU GAME
+
+   Không tự động chuyển trang khi đạt 100%.
+
+========================================== */
+
+
+
+function openGame() {
+
+  // Đã điều hướng hoặc đang điều hướng thì không xử lý nữa.
+
+  if (redirecting) return;
+
+
+
+  // Dừng hiệu ứng tải nếu vẫn còn chạy.
+
+  if (loadingTimer !== null) {
+
+    clearInterval(loadingTimer);
+
+    loadingTimer = null;
+
+  }
+
+
+
+  finished = true;
+
+
+
+  setProgress(
+
+    100,
+
+    'SẴN SÀNG',
+
+    'Game đã sẵn sàng!'
+
+  );
+
+
+
+  // Màn hình sẵn sàng: chỉ giữ tên game, chọn server và nút bắt đầu.
+
+  document.querySelector('.loading').classList.add('ready');
+
+  serverPicker.classList.remove('hidden');
+
+  startGameBtn.classList.remove('hidden');
+
+  startGameBtn.disabled = false;
+
+  startGameBtn.textContent = 'BẮT ĐẦU CHIẾN TRƯỜNG →';
+
+}
+
+
+
+startGameBtn.addEventListener('click', function () {
+
+  if (redirecting) return;
+
+
+
+  // Không cho vào game nếu chưa có hồ sơ hợp lệ.
+
+  if (!hasSavedName()) {
+
+    showMessage('Không tìm thấy tên nhân vật. Hãy tạo hồ sơ trước.');
+
+    startGameBtn.classList.add('hidden');
+
+    splash.classList.add('done');
+
+    app.classList.add('show');
+
+    return;
+
+  }
+
+
+
+  redirecting = true;
+
+
+
+  const selectedServer = serverSelect ? serverSelect.value : 'vn';
+
+  localStorage.setItem('OBEY7GAME_SERVER', selectedServer);
+
+
+
+  startGameBtn.disabled = true;
+
+  startGameBtn.textContent = 'ĐANG VÀO CHIẾN TRƯỜNG…';
+
+
+
+  // Không hiện lại các thanh tải khi người chơi đã bấm bắt đầu.
+
+  startGameBtn.textContent = 'ĐANG VÀO CHIẾN TRƯỜNG…';
+
+
+
+  // Lưu lựa chọn server để trang chiến trường có thể đọc được.
+
+  window.location.href = 'chientruong.html?server=' + encodeURIComponent(selectedServer);
+
+});
+
+
+
+/* ==========================================
+
+   HIỂN THỊ MÀN HÌNH TẠO TÊN
+
+========================================== */
+
+
+
+const TUTORIAL_DIALOGUES = [
+
+  'Ê ê ê, chờ tớ với! ✨ Tai Girl đây! Có đồng đội mới rồi, vui quá đi mất! Để tớ chỉ cậu vài mẹo hay ho trước khi mình cùng quẩy ở Chiến Trường nha!',
+
+  'Đầu tiên là sưu tầm nhân vật nè! 🎴 Dùng Gacha để mở thẻ mới. Mỗi thẻ có bậc và chỉ số Power riêng — hiểu đơn giản, Power là sức mạnh nền của nhân vật. Thẻ mới sẽ vào Túi Thẻ; trùng thẻ thì sức mạnh được cộng thêm đó!',
+
+  'Khi sẵn sàng chiến, vào Chiến Trường rồi chọn 5 thẻ trong bộ sưu tập để lập đội hình. Nhìn Power và bậc thẻ để chọn nhé! Chọn đủ 5 thẻ thì nhớ xác nhận đội hình. Sau đó hệ thống tìm đối thủ; khi trận được ghép, bấm “Sẵn sàng” đúng giờ nha!',
+
+  'Tới giờ so tài rồi! ⚔️ Trận đấu là BO5: hai bên lần lượt đấu từng cặp thẻ, ai thắng trước 3 lượt là thắng cả trận. Mỗi lượt, cậu bấm bắt đầu đo lực rồi canh thanh dọc chạy lên xuống — đừng hoảng, cứ nhìn vùng mục tiêu rồi bấm Dừng đúng lúc!',
+
+  'Bí kíp quan trọng đây nè! 👀 Canh vào vùng xanh để đạt 100% Power. Trúng vùng Bộc Phá màu đỏ thì bùng nổ tới 1000% Power luôn! Bấm lệch vùng vẫn có thể được một phần sức mạnh, càng lệch thì hiệu suất càng thấp. Thanh chạy nhanh hơn khi Power thẻ cao, nên tập trung nhaaa!',
+
+  'Còn Rank là thứ để mình leo hạng đó! 🌟 Thắng trận được cộng 1 sao, thua bị trừ 1 sao (không xuống dưới 0 sao). Đủ 7 sao thì lên bậc tiếp theo. Thế thôi, dễ hiểu hông nè? Giờ tới lượt cậu tạo tên để tớ còn gọi đồng đội cho thân mật! 💛'
+
+];
+
+guideDialogue.textContent = TUTORIAL_DIALOGUES[0];
+
+
+
+function renderTutorialCharacter() {
+
+  const pool = typeof CHARACTER_POOL !== 'undefined' && Array.isArray(CHARACTER_POOL) ? CHARACTER_POOL : [];
+
+  const character = pool.find(item => String(item && item.id) === TUTORIAL_CHARACTER_ID);
+
+  guidePortrait.replaceChildren();
+
+  if (!character) {
+
+    const fallback = document.createElement('div');
+
+    fallback.className = 'guide-fallback';
+
+    fallback.textContent = 'Chưa tải được bộ thẻ VIP. Kiểm tra data/charactersVIP.js và đường dẫn assets/cards/VIP/VIP56.mp4.';
+
+    guidePortrait.appendChild(fallback);
+
+    guideName.textContent = 'VIP56';
+
+    return;
+
+  }
+
+  guideName.textContent = character.name || ('Nhân vật ' + TUTORIAL_CHARACTER_ID);
+
+  const url = String(character.mediaUrl || '');
+
+  const ext = String(character.mediaExt || '').toLowerCase().replace(/^\./, '');
+
+  const type = String(character.mediaType || '').toLowerCase();
+
+  const pathExt = (url.split('?')[0].split('#')[0].split('.').pop() || '').toLowerCase();
+
+  const isVideo = type === 'video' || ['mp4','webm','ogg','ogv','mov','m4v'].includes(ext) || ['mp4','webm','ogg','ogv','mov','m4v'].includes(pathExt);
+
+  if (url) {
+
+    const media = document.createElement(isVideo ? 'video' : 'img');
+
+    media.className = 'guide-media';
+
+    media.src = url;
+
+    if (isVideo) { media.autoplay = true; media.loop = true; media.muted = true; media.playsInline = true; media.setAttribute('aria-label', character.name || 'Nhân vật hướng dẫn'); }
+
+    else { media.alt = character.name || 'Nhân vật hướng dẫn'; media.draggable = false; }
+
+    media.onerror = function () { media.remove(); };
+
+    guidePortrait.appendChild(media);
+
+  } else {
+
+    const fallback = document.createElement('div');
+
+    fallback.className = 'guide-fallback';
+
+    fallback.textContent = 'Thẻ VIP56 chưa có đường dẫn hình ảnh/video.';
+
+    guidePortrait.appendChild(fallback);
+
+  }
+
+}
+
+
+
+function advanceTutorial() {
+
+  if (tutorialStep < TUTORIAL_DIALOGUES.length - 1) {
+
+    tutorialStep++;
+
+    guideDialogue.textContent = TUTORIAL_DIALOGUES[tutorialStep];
+
+    guideStep.textContent = String(tutorialStep + 1);
+
+    guideNext.textContent = tutorialStep === TUTORIAL_DIALOGUES.length - 1 ? 'Đặt tên cho mình nào! 💛' : 'Nghe tiếp nè! ✨';
+
+    return;
+
+  }
+
+  guideDialogue.textContent = 'Yesss, vậy là cậu nắm được mấy điều cơ bản rồi đó! 🎉 Giờ đặt cho mình một cái tên thật ngầu nha — xong là tụi mình bắt đầu hành trình liền!';
+
+  guideNext.hidden = true;
+
+  nameDivider.style.display = 'block';
+
+  nameForm.classList.remove('guide-hidden');
+
+  nameHint.classList.remove('guide-hidden');
+
+  document.getElementById('character-name').focus({ preventScroll: true });
+
+}
+
+
+
+guideNext.addEventListener('click', advanceTutorial);
+
+renderTutorialCharacter();
+
+
+
+function openWelcome() {
+
+  if (redirecting) return;
+
+
+
+  finished = true;
+
+
+
+  if (loadingTimer !== null) {
+
+    clearInterval(loadingTimer);
+
+    loadingTimer = null;
+
+  }
+
+
+
+  setProgress(
+
+    100,
+
+    'SẴN SÀNG',
+
+    'Chưa có hồ sơ nhân vật. Hãy tạo tên để bắt đầu hành trình!'
+
+  );
+
+
+
+  setTimeout(function () {
+
+    if (redirecting) return;
+
+
+
+    splash.classList.add('done');
+
+    app.classList.add('show');
+
+
+
+    try {
+
+      input.focus({ preventScroll: true });
+
+    } catch (error) {
+
+      input.focus();
+
+    }
+
+  }, 420);
+
+}
+
+
+
+/* ==========================================
+
+   KIỂM TRA VÀ CHẠY THANH TẢI
+
+========================================== */
+
+
+
+function startLoading() {
+
+  if (loadingStarted) return;
+
+
+
+  loadingStarted = true;
+
+  startedAt = Date.now();
+
+
+
+  loadingTimer = setInterval(function () {
+
+    if (redirecting || finished) {
+
+      clearInterval(loadingTimer);
+
+      loadingTimer = null;
+
+      return;
+
+    }
+
+
+
+    const elapsed = Date.now() - startedAt;
+
+    const saved = hasSavedName();
+
+
+
+    // Người chơi đã có tên: hoàn tất tải và chờ nhấn nút.
+
+    if (saved) {
+
+      const p = Math.min(100, Math.round(elapsed / 30));
+
+
+
+      if (elapsed < 1000) {
+
+        setProgress(
+
+          p,
+
+          'KHỞI TẠO HỆ THỐNG',
+
+          'Đang khởi động game…'
+
+        );
+
+      } else if (elapsed < 2100) {
+
+        setProgress(
+
+          p,
+
+          'KIỂM TRA HỒ SƠ',
+
+          'Đã tìm thấy tên nhân vật trong bộ nhớ website…'
+
+        );
+
+      } else {
+
+        setProgress(
+
+          p,
+
+          'ĐỒNG BỘ DỮ LIỆU',
+
+          'Đang hoàn tất hồ sơ người chơi…'
+
+        );
+
+      }
+
+
+
+      if (elapsed >= 3000) {
+
+        openGame();
+
+      }
+
+
+
+      return;
+
+    }
+
+
+
+    // Người chơi chưa có tên: hiển thị tiến trình tạo hồ sơ.
+
+    const p = Math.min(94, Math.round(elapsed / 46));
+
+
+
+    if (p < 24) {
+
+      setProgress(
+
+        p,
+
+        'KHỞI TẠO HỆ THỐNG',
+
+        'Đang khởi động game…'
+
+      );
+
+    } else if (p < 52) {
+
+      setProgress(
+
+        p,
+
+        'KIỂM TRA HỒ SƠ',
+
+        'Đang kiểm tra tên nhân vật đã lưu trên website…'
+
+      );
+
+    } else if (p < 78) {
+
+      setProgress(
+
+        p,
+
+        'ĐỒNG BỘ DỮ LIỆU',
+
+        'Đang chuẩn bị dữ liệu người chơi…'
+
+      );
+
+    } else {
+
+      setProgress(
+
+        p,
+
+        'HOÀN TẤT KHỞI ĐỘNG',
+
+        'Đang xác nhận hồ sơ trước khi vào game…'
+
+      );
+
+    }
+
+
+
+    if (elapsed >= 4600) {
+
+      if (hasSavedName()) {
+
+        openGame();
+
+      } else {
+
+        openWelcome();
+
+      }
+
+    }
+
+  }, 100);
+
+}
+
+
+
+/* ==========================================
+
+   KHỞI ĐỘNG LOGO VÀ MÀN HÌNH TẢI
+
+========================================== */
+
+
+
+setTimeout(function () {
+
+  if (developerIntro) {
+
+    developerIntro.classList.add('fade');
+
+  }
+
+
+
+  setTimeout(function () {
+
+    if (developerIntro) {
+
+      developerIntro.style.display = 'none';
+
+    }
+
+
+
+    startLoading();
+
+  }, 900);
+
+}, 1900);
+
+
+
+/* ==========================================
+
+   KIỂM TRA TÊN TỪ TAB KHÁC
+
+========================================== */
+
+
+
+window.addEventListener('storage', function (event) {
+
+  if (
+
+    event.key === STORAGE_NAME &&
+
+    validSavedName(clean(event.newValue || ''))
+
+  ) {
+
+    // Chỉ hiện nút bắt đầu, không tự chuyển trang.
+
+    if (!redirecting) {
+
+      splash.classList.remove('done');
+
+      app.classList.remove('show');
+
+      openGame();
+
+    }
+
+  }
+
+});
+
+
+
+/* ==========================================
+
+   THÔNG BÁO TRÊN FORM
+
+========================================== */
+
+
+
+function showMessage(text, ok = false) {
+
+  msg.textContent = text;
+
+  msg.classList.remove('hidden');
+
+  msg.style.color = ok ? '#6ee7b7' : '#fda4af';
+
+}
+
+
+
+/* ==========================================
+
+   LƯU VÀ XÁC MINH TÊN NHÂN VẬT
+
+========================================== */
+
+
+
+document.getElementById('name-form').addEventListener(
+
+  'submit',
+
+  async function (event) {
+
+    event.preventDefault();
+
+
+
+    if (btn.disabled || redirecting) return;
+
+
+
+    const name = clean(input.value);
+
+    const normalizedName = norm(name);
+
+    const savedName = norm(getSavedName());
+
+
+
+    if (name.length < 2 || name.length > 24) {
+
+      showMessage('Tên nhân vật phải từ 2 đến 24 ký tự.');
+
+      return;
+
+    }
+
+
+
+    if (BANNED.some(function (item) {
+
+      return norm(item) === normalizedName;
+
+    })) {
+
+      showMessage('Tên nhân vật này đã bị quản trị viên cấm truy cập.');
+
+      return;
+
+    }
+
+
+
+    if (RESERVED.some(function (item) {
+
+      return norm(item) === normalizedName;
+
+    })) {
+
+      showMessage('Tên này trùng tên đối thủ hệ thống. Vui lòng chọn tên khác.');
+
+      return;
+
+    }
+
+
+
+    btn.disabled = true;
+
+    btn.textContent = 'ĐANG KIỂM TRA TÊN…';
+
+
+
+    try {
+
+      // Xác minh tên với API bảng xếp hạng.
+
+      try {
+
+        const response = await fetch(RANKING_API_URL, {
+
+          method: 'GET',
+
+          mode: 'cors',
+
+          cache: 'no-store'
+
+        });
+
+
+
+        if (!response.ok) {
+
+          throw new Error('Không thể truy cập API bảng xếp hạng.');
+
+        }
+
+
+
+        const data = await response.json();
+
+
+
+        const rows = Array.isArray(data)
+
+          ? data
+
+          : (Array.isArray(data.players) ? data.players : []);
+
+
+
+        const nameExists = rows.some(function (row) {
+
+          return norm(row && row.name) === normalizedName;
+
+        });
+
+
+
+        if (nameExists && savedName !== normalizedName) {
+
+          showMessage(
+
+            'Tên này đã có trên bảng xếp hạng. Hãy chọn tên khác để tránh giả mạo.'
+
+          );
+
+          return;
+
+        }
+
+      } catch (error) {
+
+        if (savedName !== normalizedName) {
+
+          showMessage(
+
+            'Hiện chưa xác minh được tên với bảng xếp hạng. Hãy thử lại sau.'
+
+          );
+
+          return;
+
+        }
+
+      }
+
+
+
+      // Lưu hồ sơ tại trình duyệt.
+
+      localStorage.setItem(STORAGE_NAME, name);
+
+
+
+      showMessage(
+
+        'Đã lưu hồ sơ thành công! Nhấn Bắt đầu để vào game.',
+
+        true
+
+      );
+
+
+
+      // Dừng thanh tải cũ, ẩn form và quay lại màn hình tải.
+
+      if (loadingTimer !== null) {
+
+        clearInterval(loadingTimer);
+
+        loadingTimer = null;
+
+      }
+
+
+
+      app.classList.remove('show');
+
+      splash.classList.remove('done');
+
+
+
+      // Không chuyển trang tự động.
+
+      openGame();
+
+
+
+    } catch (error) {
+
+      showMessage(
+
+        'Không thể lưu dữ liệu website. Hãy kiểm tra quyền lưu trữ của trình duyệt.'
+
+      );
+
+    } finally {
+
+      btn.disabled = false;
+
+      btn.textContent = 'LƯU TÊN & TIẾP TỤC →';
+
+    }
+
+  }
+
+);
+
+
+
+/* ==========================================
+
+   NHẠC NỀN
+
+========================================== */
+
+
+
+bgMusic.volume = 0.35;
+
+
+
+function updateMusicButton(isPlaying) {
+
+  musicLabel.textContent = isPlaying ? 'TẮT NHẠC' : 'BẬT NHẠC';
+
+
+
+  musicToggle.setAttribute(
+
+    'aria-label',
+
+    isPlaying ? 'Tắt nhạc' : 'Bật nhạc'
+
+  );
+
+
+
+  musicToggle.setAttribute(
+
+    'aria-pressed',
+
+    isPlaying ? 'true' : 'false'
+
+  );
+
+}
+
+
+
+async function playBackgroundMusic() {
+
+  try {
+
+    await bgMusic.play();
+
+    updateMusicButton(true);
+
+    return true;
+
+  } catch (error) {
+
+    updateMusicButton(false);
+
+    return false;
+
+  }
+
+}
+
+
+
+musicToggle.addEventListener('click', async function () {
+
+  if (!bgMusic.paused) {
+
+    bgMusic.pause();
+
+    updateMusicButton(false);
+
+    return;
+
+  }
+
+
+
+  await playBackgroundMusic();
+
+});
+
+
+
+// Đồng bộ trạng thái nếu trình duyệt tự dừng hoặc phát lại.
+
+bgMusic.addEventListener('play', function () {
+
+  updateMusicButton(true);
+
+});
+
+
+
+bgMusic.addEventListener('pause', function () {
+
+  updateMusicButton(false);
+
+});
+
+
+
+bgMusic.addEventListener('error', function () {
+
+  updateMusicButton(false);
+
+});
+
+
+
+// Thử phát nhạc ngay khi trang mở.
+
+playBackgroundMusic();
+
+
+
+// Nếu trình duyệt chặn tự phát, thử lại sau lần tương tác đầu tiên.
+
+function retryMusic() {
+
+  if (bgMusic.paused) {
+
+    playBackgroundMusic();
+
+  }
+
+}
+
+
+
+document.addEventListener('pointerdown', retryMusic);
+
+document.addEventListener('keydown', retryMusic);
+
+
+
+</script>
+
+</body>
+
+</html>
