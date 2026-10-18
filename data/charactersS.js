@@ -700,5 +700,31 @@ const CHARACTER_POOL_S = [
     mediaExt: "jpg",
     mediaUrl: "assets/cards/S/Zombie Man.jpg",
     lore: "Chiến thuật của tôi đơn giản lắm: kiên trì chịu đựng cho đến khi đối thủ kiệt sức."
-  }
+  },
+  {
+    id: "S55",
+    name: "Suzuki Iruma",
+    title: "Mairimashita! Iruma-kun",
+    rarity: "S",
+    element: "Light",
+    power: 20,
+    stamina: 20,
+    mediaType: "image",
+    mediaExt: "jpg",
+    mediaUrl: "assets/cards/S/Suzuki Iruma.jpg",
+    lore: "Nếu đây là con đường tớ chọn, tớ sẽ không bỏ cuộc!",
+  },
+  {
+    id: "S56",
+    name: "Crocell Kerori",
+    title: "Mairimashita! Iruma-kun",
+    rarity: "S",
+    element: "Thủy",
+    power: 20,
+    stamina: 20,
+    mediaType: "image",
+    mediaExt: "jpg",
+    mediaUrl: "assets/cards/S/Crocell Kerori.jpg",
+    lore: "Tất cả ánh mắt của mọi người... đều phải thuộc về một mình tôi!",
+  },
 ];

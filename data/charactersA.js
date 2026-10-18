@@ -518,5 +518,18 @@ const CHARACTER_POOL_A = [
     mediaExt: "jpg",
     mediaUrl: "assets/cards/A/Yoshino.jpg",
     lore: "Zadkiel... xin hãy giúp tớ đóng băng sự bạo lực này lại."
-  }
+  },
+  {
+    id: "A41",
+    name: "Barbatos Bachiko",
+    title: "Mairimashita! Iruma-kun",
+    rarity: "A",
+    element: "Phong",
+    power: 10,
+    stamina: 10,
+    mediaType: "image",
+    mediaExt: "jpg",
+    mediaUrl: "assets/cards/A/Barbatos Bachiko.jpg",
+    lore: "Tốt lắm, đồ đệ ngốc của ta!",
+  },
 ];

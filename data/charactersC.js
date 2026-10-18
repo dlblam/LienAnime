@@ -609,5 +609,18 @@ const CHARACTER_POOL_C = [
     mediaExt: "jpg",
     mediaUrl: "assets/cards/C/Yukino Agria.jpg",
     lore: "Tôi mang theo niềm tự hào của tinh linh đạo sĩ hội Sabertooth!"
-  }
+  },
+  {
+    id: "C48",
+    name: "Ami kirio",
+    title: "Mairimashita! Iruma-kun",
+    rarity: "C",
+    element: "Dark",
+    power: 2,
+    stamina: 2,
+    mediaType: "image",
+    mediaExt: "jpg",
+    mediaUrl: "assets/cards/C/Ami kirio.jpg",
+    lore: "Khuôn mặt chìm trong tuyệt vọng của người khác... chính là thứ xinh đẹp và tuyệt vời nhất trên đời!",
+  },
 ];

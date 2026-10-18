@@ -882,5 +882,18 @@ const CHARACTER_POOL_SS = [
     mediaExt: "jpg",
     mediaUrl: "assets/cards/SS/Zuko.jpg",
     lore: "Tôi phải lấy lại danh dự của chính mình!"
-  }
+  },
+  {
+    id: "SS69",
+    name: "Asmodeus Alice",
+    title: "Mairimashita! Iruma-kun",
+    rarity: "SS",
+    element: "Hỏa",
+    power: 50,
+    stamina: 50,
+    mediaType: "image",
+    mediaExt: "jpg",
+    mediaUrl: "assets/cards/SS/Asmodeus Alice.jpg",
+    lore: "Tất cả là vì Ngài Iruma!",
+  },
 ];

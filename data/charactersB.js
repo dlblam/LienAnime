@@ -583,5 +583,18 @@ const CHARACTER_POOL_B = [
     mediaExt: "jpg",
     mediaUrl: "assets/cards/B/Zeldris.jpg",
     lore: "Đại diện cho Ma Vương, Thập Giới Zeldris chấp hành lệnh trừng phạt!"
-  }
+  },
+  {
+    id: "B46",
+    name: "Purson Soi",
+    title: "Mairimashita! Iruma-kun",
+    rarity: "B",
+    element: "Phong",
+    power: 4,
+    stamina: 4,
+    mediaType: "image",
+    mediaExt: "jpg",
+    mediaUrl: "assets/cards/B/Purson Soi.jpg",
+    lore: "Xin đừng nhìn tôi... Tôi muốn sống một cuộc sống hoàn toàn bình thường và mờ nhạt.",
+  },
 ];

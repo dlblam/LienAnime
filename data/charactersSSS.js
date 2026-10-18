@@ -830,5 +830,18 @@ const CHARACTER_POOL_SSS = [
     mediaExt: "jpg",
     mediaUrl: "assets/cards/SSS/Zesshi Zetsumei.jpg",
     lore: "Chỉ cần là kẻ có thể đánh bại ta, ta không quan tâm hắn là ai."
-  }
+  },
+  {
+    id: "SSS65",
+    name: "Clara Valac",
+    title: "Mairimashita! Iruma-kun",
+    rarity: "SSS",
+    element: "Phong",
+    power: 100,
+    stamina: 100,
+    mediaType: "image",
+    mediaExt: "jpg",
+    mediaUrl: "assets/cards/SSS/Clara Valac.jpg",
+    lore: "Keebow! Sin Sin! Ran Ran!",
+  },
 ];

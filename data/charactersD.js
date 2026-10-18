@@ -262,15 +262,15 @@ const CHARACTER_POOL_D = [
   {
     id: "D21",
     name: "King",
-    title: "One-Punch Man",
+    title: "The Seven Deadly Sins",
     rarity: "D",
-    element: "Light",
+    element: "Mộc",
     power: 1,
     stamina: 1,
     mediaType: "image",
     mediaExt: "jpg",
     mediaUrl: "assets/cards/D/King.jpg",
-    lore: "(Tiếng tim đập King Engine vang lên) Lũ quái vật... các ngươi muốn thử sức với ta sao?"
+    lore: "Thánh Thạch Linh Thương Chastiefol sẽ bảo vệ những người ta yêu thương!"
   },
   {
     id: "D22",
@@ -726,5 +726,18 @@ const CHARACTER_POOL_D = [
     mediaExt: "jpg",
     mediaUrl: "assets/cards/D/kirisame.jpg",
     lore: "Đảo kho báu sẽ được bảo vệ bởi chiến binh mạnh nhất!"
-  }
+  },
+  {
+    id: "D57",
+    name: "Agares Picero",
+    title: "Mairimashita! Iruma-kun",
+    rarity: "D",
+    element: "Thổ",
+    power: 1,
+    stamina: 1,
+    mediaType: "image",
+    mediaExt: "jpg",
+    mediaUrl: "assets/cards/D/Agares Picero.jpg",
+    lore: "Phiền phức quá... Tôi chỉ muốn được ngủ yên thôi mà.",
+  },
 ];
