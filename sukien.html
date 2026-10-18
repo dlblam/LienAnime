@@ -7,27 +7,28 @@
 <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 <style>
-:root{--bg:#080a13;--panel:#111526;--line:#303751;--gold:#ffd66b}
-*{box-sizing:border-box}body{margin:0;min-height:100vh;color:#f3f4f6;font-family:'Be Vietnam Pro',sans-serif;background:radial-gradient(ellipse at 50% -10%,#45205f 0,transparent 45%),radial-gradient(ellipse at 0 100%,#152c55 0,transparent 35%),var(--bg)}
-.glass{background:linear-gradient(145deg,rgba(22,27,49,.94),rgba(10,13,27,.95));border:1px solid #343b57;border-radius:22px;box-shadow:0 18px 55px #0008}
-.hero{background:linear-gradient(115deg,#251142dd,#151d3eee 55%,#4a1c4ddd);border:1px solid #8d67ba66}
-.card{position:relative;min-width:0;aspect-ratio:3/4;border-radius:13px;border:2px solid #ffffff4d;overflow:hidden;box-shadow:0 8px 20px #0008;transition:.18s;display:flex;align-items:center;justify-content:center}
+:root{--bg:#160d2b;--panel:#241442;--line:#8055a8;--gold:#ffe36e;--pink:#ff77c8;--mint:#77f5d0;--sky:#78d9ff}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:#f3f4f6;font-family:'Be Vietnam Pro',sans-serif;background:radial-gradient(ellipse at 12% 0%,#6d2b91 0,transparent 34%),radial-gradient(ellipse at 90% 12%,#174c79 0,transparent 30%),radial-gradient(ellipse at 50% 100%,#5b1d67 0,transparent 38%),linear-gradient(145deg,#160d2b,#100b24 65%,#20103b);background-attachment:fixed}
+.glass{background:linear-gradient(145deg,rgba(48,26,77,.88),rgba(22,17,49,.94));border:1px solid #a76cce66;border-radius:22px;box-shadow:0 18px 55px #08031380, inset 0 1px #ffffff0d;backdrop-filter:blur(12px)}
+.hero{background:radial-gradient(circle at 88% 18%,#ff78c833,transparent 26%),linear-gradient(115deg,#54247bdd,#27205cee 52%,#075c78dd);border:1px solid #f4a7ff88;box-shadow:0 15px 45px #08031380,inset 0 1px #ffffff25;position:relative;overflow:hidden}.hero:after{content:'✦  ✧  ★  ✦';position:absolute;right:18px;bottom:8px;color:#ffe36e66;font-size:22px;letter-spacing:10px;pointer-events:none}
+.card{position:relative;min-width:0;aspect-ratio:3/4;border-radius:13px;border:2px solid #ffffff75;overflow:hidden;box-shadow:0 8px 20px #0008,0 0 12px #c879ff22;transition:.18s;display:flex;align-items:center;justify-content:center}
 .card:before{content:"";position:absolute;inset:4px;border:1px solid #ffffff55;border-radius:8px;pointer-events:none}
-.top-card{background:linear-gradient(145deg,#21163c,#101629);cursor:default;border-color:#6b6487!important;color:#b8a9d8!important}.top-card .backmark{color:#b8a9d8}
+.top-card{background:linear-gradient(145deg,#39225d,#17132f);cursor:default;border-color:#b58de0!important;color:#f0cfff!important}.top-card .backmark{color:#b8a9d8}
 .top-card .backmark{font-size:clamp(16px,3vw,30px);text-shadow:0 0 14px currentColor}
 .color-card{cursor:grab;user-select:none;touch-action:pan-y}.color-card:active{cursor:grabbing}.color-card.dragging{opacity:.42}.color-card.drop-target{outline:3px dashed #fcd34d;outline-offset:2px}
-.color-card:hover{transform:translateY(-4px)}.color-card.selected{outline:3px solid #fff;outline-offset:3px;transform:translateY(-5px);z-index:2}
+.color-card:hover{transform:translateY(-4px);filter:brightness(1.12) saturate(1.12)}.color-card.selected{outline:3px solid #fff;outline-offset:3px;transform:translateY(-5px);z-index:2}
 .color-card .orb{width:60%;aspect-ratio:1;border-radius:50%;border:3px solid #ffffffa6;box-shadow:0 0 22px currentColor,inset 0 0 20px #ffffff44}
 .small-label{font-size:clamp(8px,1.5vw,12px);font-weight:800;letter-spacing:.08em}
-.btn{border-radius:12px;padding:12px 18px;font-weight:900;transition:.2s}.btn:disabled{opacity:.4;cursor:not-allowed}.primary{background:linear-gradient(100deg,#f9c74f,#f59e0b);color:#211306;box-shadow:0 7px 24px #f59e0b30}.secondary{border:1px solid #505a79;background:#222941}
+.btn{border-radius:12px;padding:12px 18px;font-weight:900;transition:.2s}.btn:disabled{opacity:.4;cursor:not-allowed}.primary{background:linear-gradient(105deg,#ffe66d,#ffb84d 48%,#ff8bc7);color:#35113e;box-shadow:0 7px 24px #ff9bd744;border:1px solid #fff3b0}.primary:hover{filter:brightness(1.07);transform:translateY(-1px)}.secondary{border:1px solid #a77bc7;background:linear-gradient(135deg,#382458,#202047);color:#f5eaff}
 
 .event-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(3,5,15,.86);backdrop-filter:blur(10px)}
 .event-modal.open{display:flex;animation:eventFade .22s ease-out}
-.event-dialog{position:relative;width:min(100%,440px);max-height:92vh;overflow:auto;border:1px solid #fcd34d88;border-radius:24px;padding:20px;background:radial-gradient(ellipse at 50% 0%,#54246e 0,transparent 55%),linear-gradient(145deg,#17162d,#080b17);box-shadow:0 25px 100px #000c;text-align:center}
-.event-media{width:min(68%,245px);aspect-ratio:3/4;margin:12px auto 16px;overflow:hidden;border:2px solid #fcd34d;border-radius:16px;background:#101426;box-shadow:0 0 35px #f59e0b30}
+.event-dialog{position:relative;width:min(100%,440px);max-height:92vh;overflow:auto;border:1px solid #ffdf7c;border-radius:24px;padding:20px;background:radial-gradient(ellipse at 50% 0%,#8d3c9f 0,transparent 55%),linear-gradient(145deg,#30204e,#100b24);box-shadow:0 25px 100px #000c;text-align:center}
+.event-media{width:min(68%,245px);aspect-ratio:3/4;margin:12px auto 16px;overflow:hidden;border:2px solid #ffe36e;border-radius:16px;background:#21143b;box-shadow:0 0 35px #f59e0b30}
 .event-media img,.event-media video{display:block;width:100%;height:100%;object-fit:cover}
-.event-stat{display:inline-flex;align-items:center;gap:6px;border:1px solid #fcd34d55;background:#f59e0b12;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:900;color:#fde68a}
+.event-stat{display:inline-flex;align-items:center;gap:6px;border:1px solid #fcd34d55;background:#f59e0b12;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:900;color:#fff0a6}
 @keyframes eventFade{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
+.music-toggle{position:fixed;right:16px;bottom:16px;z-index:1000;border:1px solid #ffdc8d88;background:linear-gradient(135deg,#642b83ee,#153e64ee);color:#fff3b0;border-radius:999px;padding:11px 15px;font-weight:900;box-shadow:0 8px 28px #0008;backdrop-filter:blur(10px)}.music-toggle:hover{filter:brightness(1.15)}
 @media(prefers-reduced-motion:reduce){.event-modal.open{animation:none}}
 
 @media(max-width:600px){.glass{border-radius:16px}.card{border-radius:8px}.card:before{inset:3px}.btn{padding:11px 12px;font-size:13px}.board{gap:7px!important}.top-card .backmark{font-size:16px}}
@@ -80,6 +81,8 @@
     <button id="eventRevealOk" type="button" class="btn primary w-full mt-5">TIẾP TỤC</button>
   </div>
 </div>
+<button id="musicToggle" type="button" class="music-toggle" aria-label="Bật hoặc tắt nhạc sự kiện" aria-pressed="false" title="Bật nhạc Ma Giới"><i class="fa-solid fa-music mr-2"></i><span>Bật nhạc Ma Giới</span></button>
+<audio id="eventBgm" src="assets/audio/iruma-event.mp3" loop preload="auto"></audio>
 <!-- Dữ liệu nhân vật dùng chung với gacha.html; giữ đúng thứ tự ưu tiên tìm thẻ -->
 <script src="data/charactersVIP.js"></script>
 <script src="data/charactersSSS.js"></script>
@@ -268,5 +271,41 @@ function check(){
  saveGameState();
 }
 $("check").addEventListener("click",check);$("shuffle").addEventListener("click",()=>{if(won)return;order=shuffleArray(order);selected=[];render();$("result").textContent=`Đã xáo trộn hàng màu. Phí kiểm tra hiện tại: ${currentCost().toLocaleString("vi-VN")} Pi.`;saveGameState()});$("player").textContent=playerName||"Chưa đăng nhập";showBalance();newRound();window.addEventListener("storage",e=>{if(e.key===piKey()||e.key===COLLECTION_KEY) {showBalance();updateReward()}});
+// Nhạc nền sự kiện: tự thử phát khi tải trang; nếu trình duyệt chặn autoplay,
+// tự thử lại sau thao tác đầu tiên của người dùng. Nút luôn cho phép bật/tắt thủ công.
+const eventBgm=$("eventBgm"),musicToggle=$("musicToggle");
+function updateMusicButton(playing){
+  musicToggle.innerHTML=playing
+    ? '<i class="fa-solid fa-volume-high mr-2"></i><span>Tắt nhạc Ma Giới</span>'
+    : '<i class="fa-solid fa-music mr-2"></i><span>Bật nhạc Ma Giới</span>';
+  musicToggle.setAttribute("aria-pressed",String(playing));
+  musicToggle.title=playing?"Tắt nhạc Ma Giới":"Bật nhạc Ma Giới";
+}
+async function tryStartEventMusic(){
+  if(!eventBgm || !eventBgm.paused)return;
+  try{
+    await eventBgm.play();
+    updateMusicButton(true);
+    document.removeEventListener("pointerdown",unlockEventMusic,true);
+    document.removeEventListener("keydown",unlockEventMusic,true);
+  }catch(err){
+    updateMusicButton(false);
+    console.info("Trình duyệt chặn tự phát hoặc chưa tìm thấy assets/audio/iruma-event.mp3",err);
+  }
+}
+function unlockEventMusic(){tryStartEventMusic();}
+musicToggle.addEventListener("click",async()=>{
+  if(!eventBgm.paused){eventBgm.pause();updateMusicButton(false);return;}
+  try{await eventBgm.play();updateMusicButton(true);}
+  catch(err){updateMusicButton(false);console.warn("Không phát được nhạc sự kiện. Hãy kiểm tra file assets/audio/iruma-event.mp3",err);}
+});
+eventBgm.addEventListener("play",()=>updateMusicButton(true));
+eventBgm.addEventListener("pause",()=>updateMusicButton(false));
+// Ưu tiên tự phát ngay khi trang được mở.
+tryStartEventMusic();
+// Nếu autoplay bị trình duyệt chặn, lần chạm/click/phím đầu tiên sẽ thử phát lại.
+document.addEventListener("pointerdown",unlockEventMusic,true);
+document.addEventListener("keydown",unlockEventMusic,true);
+
 </script>
 </body></html>

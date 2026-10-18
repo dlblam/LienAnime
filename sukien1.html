@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Liên Anime — Sự Kiện Collab Iruma-kun</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+:root{--bg:#080a13;--panel:#111526;--line:#303751;--gold:#ffd66b}
+*{box-sizing:border-box}body{margin:0;min-height:100vh;color:#f3f4f6;font-family:'Be Vietnam Pro',sans-serif;background:radial-gradient(ellipse at 50% -10%,#45205f 0,transparent 45%),radial-gradient(ellipse at 0 100%,#152c55 0,transparent 35%),var(--bg)}
+.glass{background:linear-gradient(145deg,rgba(22,27,49,.94),rgba(10,13,27,.95));border:1px solid #343b57;border-radius:22px;box-shadow:0 18px 55px #0008}
+.hero{background:linear-gradient(115deg,#251142dd,#151d3eee 55%,#4a1c4ddd);border:1px solid #8d67ba66}
+.card{position:relative;min-width:0;aspect-ratio:3/4;border-radius:13px;border:2px solid #ffffff4d;overflow:hidden;box-shadow:0 8px 20px #0008;transition:.18s;display:flex;align-items:center;justify-content:center}
+.card:before{content:"";position:absolute;inset:4px;border:1px solid #ffffff55;border-radius:8px;pointer-events:none}
+.top-card{background:linear-gradient(145deg,#21163c,#101629);cursor:default;border-color:#6b6487!important;color:#b8a9d8!important}.top-card .backmark{color:#b8a9d8}
+.top-card .backmark{font-size:clamp(16px,3vw,30px);text-shadow:0 0 14px currentColor}
+.color-card{cursor:grab;user-select:none;touch-action:pan-y}.color-card:active{cursor:grabbing}.color-card.dragging{opacity:.42}.color-card.drop-target{outline:3px dashed #fcd34d;outline-offset:2px}
+.color-card:hover{transform:translateY(-4px)}.color-card.selected{outline:3px solid #fff;outline-offset:3px;transform:translateY(-5px);z-index:2}
+.color-card .orb{width:60%;aspect-ratio:1;border-radius:50%;border:3px solid #ffffffa6;box-shadow:0 0 22px currentColor,inset 0 0 20px #ffffff44}
+.small-label{font-size:clamp(8px,1.5vw,12px);font-weight:800;letter-spacing:.08em}
+.btn{border-radius:12px;padding:12px 18px;font-weight:900;transition:.2s}.btn:disabled{opacity:.4;cursor:not-allowed}.primary{background:linear-gradient(100deg,#f9c74f,#f59e0b);color:#211306;box-shadow:0 7px 24px #f59e0b30}.secondary{border:1px solid #505a79;background:#222941}
+
+.event-modal{position:fixed;inset:0;z-index:9999;display:none;align-items:center;justify-content:center;padding:18px;background:rgba(3,5,15,.86);backdrop-filter:blur(10px)}
+.event-modal.open{display:flex;animation:eventFade .22s ease-out}
+.event-dialog{position:relative;width:min(100%,440px);max-height:92vh;overflow:auto;border:1px solid #fcd34d88;border-radius:24px;padding:20px;background:radial-gradient(ellipse at 50% 0%,#54246e 0,transparent 55%),linear-gradient(145deg,#17162d,#080b17);box-shadow:0 25px 100px #000c;text-align:center}
+.event-media{width:min(68%,245px);aspect-ratio:3/4;margin:12px auto 16px;overflow:hidden;border:2px solid #fcd34d;border-radius:16px;background:#101426;box-shadow:0 0 35px #f59e0b30}
+.event-media img,.event-media video{display:block;width:100%;height:100%;object-fit:cover}
+.event-stat{display:inline-flex;align-items:center;gap:6px;border:1px solid #fcd34d55;background:#f59e0b12;border-radius:999px;padding:7px 12px;font-size:12px;font-weight:900;color:#fde68a}
+@keyframes eventFade{from{opacity:0;transform:scale(.98)}to{opacity:1;transform:scale(1)}}
+@media(prefers-reduced-motion:reduce){.event-modal.open{animation:none}}
+
+@media(max-width:600px){.glass{border-radius:16px}.card{border-radius:8px}.card:before{inset:3px}.btn{padding:11px 12px;font-size:13px}.board{gap:7px!important}.top-card .backmark{font-size:16px}}
+</style>
+</head>
+<body>
+<div class="max-w-5xl mx-auto px-3 sm:px-6 py-5 sm:py-8">
+<header class="flex items-center justify-between gap-3 mb-5">
+<div><div class="text-xs uppercase tracking-[.25em] text-purple-300 font-bold">LIÊN ANIME • SPECIAL COLLAB</div><h1 class="text-2xl sm:text-4xl font-black mt-1">MAIRIMASHITA! <span class="text-amber-300">IRUMA-KUN</span></h1></div>
+<a href="chientruong.html" class="secondary rounded-xl px-3 py-2 text-xs sm:text-sm font-bold whitespace-nowrap"><i class="fa-solid fa-arrow-left mr-1"></i> Chiến trường</a>
+</header>
+<section class="hero rounded-3xl p-4 sm:p-6 mb-5 flex items-center gap-4">
+<div class="hidden sm:flex w-24 h-24 rounded-2xl items-center justify-center bg-purple-950/70 border border-purple-300/30"><i class="fa-solid fa-wand-magic-sparkles text-5xl text-amber-200"></i></div>
+<div class="flex-1"><div class="text-amber-200 text-xs font-black tracking-[.2em] mb-1">SỰ KIỆN GIỚI HẠN</div><h2 class="text-xl sm:text-2xl font-black">Thử Thách Ma Giới</h2><p class="text-sm text-slate-300 mt-1">Sắp xếp 7 màu trùng với hàng mục tiêu. Đúng cả 7 vị trí để nhận thẻ sự kiện độc quyền!</p></div>
+</section>
+<div class="grid grid-cols-2 gap-3 mb-5">
+<div class="glass p-4"><div class="text-xs text-slate-400 font-bold">NHÂN VẬT</div><div id="player" class="font-black mt-1 truncate">Chưa đăng nhập</div></div>
+<div class="glass p-4"><div class="text-xs text-slate-400 font-bold">SỐ PI HIỆN CÓ</div><div class="text-2xl font-black text-amber-300 mt-1"><span id="balance">—</span> <span class="text-sm">Pi</span></div></div>
+</div>
+<section class="glass p-4 sm:p-6">
+<div class="flex items-center justify-between gap-2 mb-3"><h3 class="font-black text-sm sm:text-lg"><span class="text-purple-300">01.</span> HÀNG MỤC TIÊU</h3><span class="text-[10px] sm:text-xs text-slate-400">Màu mục tiêu được ẩn ngẫu nhiên</span></div>
+<div id="target" class="board grid grid-cols-7 gap-2"></div>
+<div class="flex items-center justify-between gap-2 mt-7 mb-3"><h3 class="font-black text-sm sm:text-lg"><span class="text-amber-300">02.</span> SẮP XẾP MÀU</h3><span class="text-[10px] sm:text-xs text-slate-400">Kéo thẻ để sắp xếp · chạm 2 thẻ cũng đổi chỗ</span></div>
+<div id="board" class="board grid grid-cols-7 gap-2"></div>
+<div class="flex flex-wrap items-center justify-between gap-3 mt-5 border-t border-slate-700 pt-4">
+<div><div class="text-xs text-slate-400">PHÍ MỖI LẦN KIỂM TRA</div><div id="checkCost" class="font-black text-amber-300">20.000 Pi</div><div id="checkCount" class="text-xs text-slate-500 mt-1">Lần kiểm tra tiếp theo: 1</div></div>
+<div class="flex gap-2"><button id="shuffle" class="btn secondary"><i class="fa-solid fa-shuffle mr-1"></i> Xáo lại</button><button id="check" class="btn primary"><i class="fa-solid fa-magnifying-glass mr-1"></i> Kiểm tra</button></div>
+</div>
+<div id="result" role="status" class="mt-4 rounded-xl bg-slate-950/60 border border-slate-700 p-4 text-sm text-slate-300">Chọn hai thẻ ở hàng dưới để đổi vị trí, sau đó nhấn Kiểm tra.</div>
+</section>
+<section id="reward" class="glass p-5 mt-5">
+<div class="flex items-center justify-between gap-3 mb-4"><div><div class="text-amber-300 text-xs font-black tracking-widest">PHẦN THƯỞNG</div><h3 class="text-xl font-black">Thẻ Sự Kiện</h3><p class="text-xs text-slate-400 mt-1">Hoàn thành thử thách để nhận thẻ collab.</p></div><i class="fa-solid fa-gift text-3xl text-amber-300"></i></div>
+<div id="rewardCard" class="flex items-center gap-4 rounded-2xl border border-amber-300/30 bg-slate-950/50 p-3 opacity-70"><div class="w-16 h-20 shrink-0 rounded-xl border-2 border-amber-300 bg-gradient-to-br from-purple-700 via-fuchsia-700 to-amber-500 flex items-center justify-center"><i class="fa-solid fa-crown text-3xl text-amber-100"></i></div><div class="min-w-0"><div class="text-amber-300 text-[10px] font-black tracking-widest">IRUMA-KUN COLLAB</div><h4 class="font-black">Thẻ Sự Kiện — Iruma-kun</h4><p class="text-sm text-white font-bold mt-1">Nhân vật: <b id="rewardCharacterName">Đang tải nhân vật...</b></p><p id="rewardCharacterLore" class="text-xs italic text-slate-300 mt-1">“Câu nói của nhân vật sẽ hiển thị ở đây.”</p><span id="cardId" class="hidden" aria-hidden="true">IRUMA-EVT-001</span><p class="text-sm text-amber-200 mt-1">Power hiện có: <b id="rewardPower">Chưa sở hữu</b></p><p id="rewardNote" class="text-xs text-slate-400 mt-1">Nhận thẻ để mở khóa phần thưởng.</p></div></div>
+</section>
+<p class="text-center text-xs text-slate-500 mt-5">Liên Anime • Sự kiện Collab fan-made. Pi được dùng chung với Chiến Trường trên cùng trình duyệt.</p>
+</div>
+<div id="eventReveal" class="event-modal" role="dialog" aria-modal="true" aria-labelledby="eventRevealTitle">
+  <div class="event-dialog">
+    <button id="eventRevealClose" type="button" aria-label="Đóng" class="absolute right-4 top-3 w-9 h-9 rounded-full border border-white/20 bg-white/10 text-white text-xl">×</button>
+    <div class="text-amber-300 text-xs font-black tracking-[.25em]">LIÊN ANIME • EVENT REWARD</div>
+    <h2 id="eventRevealTitle" class="text-2xl font-black mt-2">🎉 NHẬN ĐƯỢC THẺ SỰ KIỆN!</h2>
+    <div id="eventRevealMedia" class="event-media"></div>
+    <div id="eventRevealName" class="text-xl font-black">Thẻ Sự Kiện</div>
+    <p id="eventRevealLore" class="mt-3 max-w-xl text-sm italic leading-relaxed text-slate-200">“Câu nói của nhân vật.”</p>
+    <div class="flex flex-wrap items-center justify-center gap-2 mt-3">
+      <span id="eventRevealRarity" class="event-stat">EVENT</span>
+      <span id="eventRevealPower" class="event-stat">Power 1</span>
+    </div>
+    <p id="eventRevealMessage" class="text-sm text-slate-300 mt-4">Thẻ đã được lưu vào Túi Thẻ.</p>
+    <button id="eventRevealOk" type="button" class="btn primary w-full mt-5">TIẾP TỤC</button>
+  </div>
+</div>
+<!-- Dữ liệu nhân vật dùng chung với gacha.html; giữ đúng thứ tự ưu tiên tìm thẻ -->
+<script src="data/charactersVIP.js"></script>
+<script src="data/charactersSSS.js"></script>
+<script src="data/charactersSS.js"></script>
+<script src="data/charactersS.js"></script>
+<script src="data/charactersA.js"></script>
+<script src="data/charactersB.js"></script>
+<script src="data/charactersC.js"></script>
+<script src="data/charactersD.js"></script>
+<script>
+const PI_PREFIX="obey7_pi_balance_v1_",NAME_KEY="lienanime_battle_character_name_v1",COST_BASE=20000,COST_STEP=4000;
+const TARGET_KEY="lienanime_iruma_target_order_v1",STATE_PREFIX="lienanime_iruma_game_state_v1_",COLLECTION_KEY="lienanime_v1_collection";
+// THÊM ID THẺ SỰ KIỆN Ở ĐÂY: mỗi ID trong danh sách là một phần thưởng hợp lệ.
+const EVENT_CARD_IDS=["SSS65"];
+const DEFAULT_EVENT_ID="IRUMA-EVT-001";
+function pickEventCardId(){const ids=EVENT_CARD_IDS.map(x=>String(x||"").trim()).filter(Boolean);return ids.length?ids[Math.floor(Math.random()*ids.length)]:DEFAULT_EVENT_ID;}
+const colors=[{name:"Đỏ",hex:"#fb4545"},{name:"Cam",hex:"#fb923c"},{name:"Vàng",hex:"#facc15"},{name:"Lục",hex:"#4ade80"},{name:"Lam",hex:"#38bdf8"},{name:"Chàm",hex:"#818cf8"},{name:"Tím",hex:"#d879ff"}];
+let playerName=localStorage.getItem(NAME_KEY)||"",selected=[],order=[],won=false,dragFrom=-1,checkCount=0;
+const $=id=>document.getElementById(id),norm=s=>String(s||"").trim().toLocaleLowerCase("vi"),piKey=()=>PI_PREFIX+encodeURIComponent(norm(playerName)||"guest"),stateKey=()=>STATE_PREFIX+encodeURIComponent(norm(playerName)||"guest");
+function balance(){let v=localStorage.getItem(piKey());if(v===null){v="1000";localStorage.setItem(piKey(),v)}return Math.max(0,Math.floor(Number(v)||0))}
+function showBalance(){$("balance").textContent=balance().toLocaleString("vi-VN")}
+function shuffleArray(a){for(let i=a.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+function loadTarget(){try{const a=JSON.parse(localStorage.getItem(TARGET_KEY)||"null");if(Array.isArray(a)&&a.length===7&&new Set(a).size===7&&a.every(n=>Number.isInteger(n)&&n>=0&&n<7))return a}catch(e){}const a=shuffleArray([0,1,2,3,4,5,6]);localStorage.setItem(TARGET_KEY,JSON.stringify(a));return a}
+const targetOrder=loadTarget();
+function getEventDisplayCard(){
+ const id=String(EVENT_CARD_IDS.find(x=>String(x||"").trim())||DEFAULT_EVENT_ID);
+ for(const pool of getEventCharacterPools()){
+  const found=pool.find(c=>c&&String(c.id)===id);
+  if(found)return found;
+ }
+ let owned=[];try{owned=JSON.parse(localStorage.getItem(COLLECTION_KEY)||"[]")}catch(e){}
+ return Array.isArray(owned)?owned.find(c=>c&&String(c.id)===id)||null:null;
+}
+function updateReward(){
+ let cards=[];try{cards=JSON.parse(localStorage.getItem(COLLECTION_KEY)||"[]")}catch(e){}
+ if(!Array.isArray(cards))cards=[];
+ const ids=EVENT_CARD_IDS.map(x=>String(x||"").trim()).filter(Boolean);
+ const owned=cards.filter(c=>ids.includes(String(c?.id)));
+ const power=owned.reduce((n,c)=>n+Math.max(0,Number(c.power)||0),0);
+ const displayCard=getEventDisplayCard();
+ $("rewardPower").textContent=owned.length?`${power.toLocaleString("vi-VN")} Power`:"Chưa sở hữu";
+ $("rewardNote").textContent=owned.length?`Đã sở hữu ${owned.length} thẻ sự kiện. Nhận trùng sẽ cộng thêm Power gốc của thẻ.`:"Hoàn thành thử thách để nhận thẻ nhân vật sự kiện.";
+ $("rewardCharacterName").textContent=displayCard?(displayCard.name||displayCard.title||"Thẻ Sự Kiện"):"Chưa tải được dữ liệu nhân vật";
+ $("rewardCharacterLore").textContent=displayCard?.lore?`“${displayCard.lore}”`:"Chưa có câu nói (lore) cho nhân vật này.";
+ // ID vẫn dùng nội bộ để xử lý phần thưởng nhưng không hiển thị cho người chơi.
+ $("cardId").textContent="";
+ $("rewardCard").classList.toggle("opacity-70",!owned.length);
+}
+function getEventCharacterPools(){
+  // Ưu tiên đúng thứ tự được yêu cầu: VIP → SSS → SS → S → A → B → C → D.
+  const pools=[];
+  if(typeof CHARACTER_POOL_VIP!="undefined"&&Array.isArray(CHARACTER_POOL_VIP))pools.push(CHARACTER_POOL_VIP);
+  if(typeof CHARACTER_POOL_SSS!="undefined"&&Array.isArray(CHARACTER_POOL_SSS))pools.push(CHARACTER_POOL_SSS);
+  if(typeof CHARACTER_POOL_SS!="undefined"&&Array.isArray(CHARACTER_POOL_SS))pools.push(CHARACTER_POOL_SS);
+  if(typeof CHARACTER_POOL_S!="undefined"&&Array.isArray(CHARACTER_POOL_S))pools.push(CHARACTER_POOL_S);
+  if(typeof CHARACTER_POOL_A!="undefined"&&Array.isArray(CHARACTER_POOL_A))pools.push(CHARACTER_POOL_A);
+  if(typeof CHARACTER_POOL_B!="undefined"&&Array.isArray(CHARACTER_POOL_B))pools.push(CHARACTER_POOL_B);
+  if(typeof CHARACTER_POOL_C!="undefined"&&Array.isArray(CHARACTER_POOL_C))pools.push(CHARACTER_POOL_C);
+  if(typeof CHARACTER_POOL_D!="undefined"&&Array.isArray(CHARACTER_POOL_D))pools.push(CHARACTER_POOL_D);
+  if(typeof CHARACTER_POOL!="undefined"&&Array.isArray(CHARACTER_POOL))pools.push(CHARACTER_POOL);
+  return pools;
+}
+function eventCardTemplate(id,existingCard=null){
+  const key=String(id??"");
+  let source=null;
+  for(const pool of getEventCharacterPools()){
+    source=pool.find(c=>c&&String(c.id)===key);
+    if(source)break;
+  }
+  // Nếu tìm thấy ID trong data gacha, giữ nguyên toàn bộ dữ liệu và Power gốc của thẻ.
+  const fallback={id:key,name:"Thẻ Sự Kiện — Iruma-kun",title:"Mairimashita! Iruma-kun",rarity:"EVENT",tier:"EVENT",element:"Ma Giới",stamina:1,power:1,mediaType:"image",mediaUrl:"data:image/svg+xml,"+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 320"><defs><linearGradient id="g" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#542080"/><stop offset=".55" stop-color="#a21caf"/><stop offset="1" stop-color="#f59e0b"/></linearGradient></defs><rect width="240" height="320" rx="18" fill="#0f1024"/><rect x="8" y="8" width="224" height="304" rx="14" fill="url(#g)" stroke="#ffe08a" stroke-width="4"/><path d="M120 54l17 36 40 6-29 28 7 40-35-19-35 19 7-40-29-28 40-6z" fill="#fff1b8"/><text x="120" y="222" text-anchor="middle" font-size="24" font-weight="bold" fill="#fff">IRUMA-KUN</text><text x="120" y="254" text-anchor="middle" font-size="17" font-weight="bold" fill="#ffe08a">EVENT CARD</text></svg>')};
+  const card={...(source||fallback),...(existingCard||{})};
+  card.id=key;
+  // Power gốc lấy từ dữ liệu nhân vật, không tự đặt thành 1 và không dùng tổng Power sở hữu.
+  card.power=Math.max(0,Number(source?.power??existingCard?.basePower??existingCard?.power??fallback.power)||0);
+  card.event=true;
+  card.eventType="iruma-collab";
+  card.eventObtainedAt=existingCard?.eventObtainedAt||new Date().toISOString();
+  card.pulledAt=new Date().toISOString();
+  return card;
+}
+function ensureEventReveal(){return $("eventReveal")}
+function showEventReward(card,isDuplicate,addedPower,totalPower){
+  const modal=ensureEventReveal();
+  const media=$("eventRevealMedia");media.replaceChildren();
+  const type=String(card?.mediaType||"").toLowerCase();
+  const ext=String(card?.mediaExt||"").toLowerCase().replace(/^\./,"");
+  const url=String(card?.mediaUrl||card?.image||"");
+  const urlExt=(url.split("?")[0].split("#")[0].split(".").pop()||"").toLowerCase();
+  const isVideo=["video","mp4","webm","ogg","ogv","mov","m4v"].includes(type)||["mp4","webm","ogg","ogv","mov","m4v"].includes(ext)||["mp4","webm","ogg","ogv","mov","m4v"].includes(urlExt);
+  if(url){
+    const el=document.createElement(isVideo?"video":"img");
+    if(isVideo){el.src=url;el.autoplay=true;el.loop=true;el.muted=true;el.playsInline=true;el.controls=true}
+    else{el.src=url;el.alt=card.name||"Thẻ sự kiện";el.draggable=false;el.onerror=()=>{el.style.display="none"}}
+    media.appendChild(el);
+  }else{media.textContent="🎴";media.classList.add("flex","items-center","justify-center","text-6xl")}
+  $("eventRevealName").textContent=card.name||card.title||"Thẻ Sự Kiện";
+  $("eventRevealLore").textContent=card.lore?`“${card.lore}”`:"Nhân vật này chưa có câu nói (lore) trong dữ liệu thẻ.";
+  $("eventRevealRarity").textContent=String(card.rarity||card.tier||"EVENT").toUpperCase();
+  $("eventRevealPower").textContent=`Power gốc ${Number(addedPower)||0}`;
+  $("eventRevealMessage").textContent=isDuplicate?`Bạn đã sở hữu thẻ này: cộng ${addedPower} Power gốc của thẻ sự kiện. Tổng Power của thẻ trong Túi Thẻ: ${totalPower}.`:`Chúc mừng! Đã thêm thẻ vào đầu Túi Thẻ với Power gốc ${addedPower}.`;
+  modal.classList.add("open");document.body.style.overflow="hidden";
+  const close=()=>{modal.classList.remove("open");document.body.style.overflow="";};
+  $("eventRevealClose").onclick=close;$("eventRevealOk").onclick=close;
+  modal.onclick=e=>{if(e.target===modal)close()};
+  const onKey=e=>{if(e.key==="Escape"&&modal.classList.contains("open")){close();document.removeEventListener("keydown",onKey)}};
+  document.addEventListener("keydown",onKey);
+}
+function saveEventCard(id){
+  let raw=[];
+  try{raw=JSON.parse(localStorage.getItem(COLLECTION_KEY)||"[]")}catch(e){}
+  if(!Array.isArray(raw))raw=[];
+  const key=String(id);
+
+  // Gộp những ID trùng sẵn có nhưng vẫn giữ nguyên thứ tự các thẻ trong Túi Thẻ.
+  const cards=[],map=new Map();
+  for(const item of raw){
+    if(!item||item.id===undefined||item.id===null)continue;
+    const k=String(item.id);
+    if(!map.has(k)){
+      const copy={...item,power:Number(item.power)||0};
+      map.set(k,copy);cards.push(copy);
+    }else{
+      map.get(k).power=(Number(map.get(k).power)||0)+(Number(item.power)||0);
+    }
+  }
+
+  const sourceCard=eventCardTemplate(key,null);
+  const basePower=Math.max(0,Number(sourceCard.power)||0); // Power gốc của thẻ sự kiện trong data gacha.
+  let card=map.get(key);
+  const duplicate=!!card;
+  const addedPower=basePower;
+
+  if(card){
+    // Thẻ trùng: chỉ cộng Power gốc của thẻ sự kiện vào thẻ đã sở hữu.
+    const totalPower=(Number(card.power)||0)+basePower;
+    const preserved={...card};
+    Object.assign(card,sourceCard,preserved);
+    card.id=key;
+    card.power=totalPower;
+    card.event=true;
+    card.eventType="iruma-collab";
+    card.eventObtainedAt=preserved.eventObtainedAt||new Date().toISOString();
+    card.pulledAt=new Date().toISOString();
+  }else{
+    // Thẻ mới: thêm vào ĐẦU danh sách giống như vừa Gacha trong gacha.html.
+    card={...sourceCard,power:basePower};
+    card.instanceId="event_"+Date.now()+"_"+Math.random().toString(36).slice(2,8);
+    card.pulledAt=new Date().toLocaleTimeString();
+    cards.unshift(card);
+    map.set(key,card);
+  }
+
+  localStorage.setItem(COLLECTION_KEY,JSON.stringify(cards));
+  return {card,duplicate,addedPower,totalPower:Number(card.power)||0};
+}
+
+function validOrder(a){return Array.isArray(a)&&a.length===7&&new Set(a).size===7&&a.every(n=>Number.isInteger(n)&&n>=0&&n<7)}
+function currentCost(){return COST_BASE+checkCount*COST_STEP}
+function updateCheckCost(){$("checkCost").textContent=currentCost().toLocaleString("vi-VN")+" Pi";$("checkCount").textContent="Lần kiểm tra tiếp theo: "+(checkCount+1)}
+function saveGameState(){try{localStorage.setItem(stateKey(),JSON.stringify({order,won,checkCount,result:$("result").innerHTML,updatedAt:Date.now()}))}catch(e){console.warn("Không thể lưu tiến trình sự kiện",e)}}
+function loadGameState(){try{const s=JSON.parse(localStorage.getItem(stateKey())||"null");if(s&&validOrder(s.order))return s}catch(e){}return null}
+function newRound(){const saved=loadGameState();selected=[];if(saved){order=saved.order.slice();won=!!saved.won;checkCount=Math.max(0,Math.floor(Number(saved.checkCount)||0));if(saved.result)$("result").innerHTML=saved.result;else $("result").textContent="Đã khôi phục tiến trình trước đó. Tiếp tục sắp xếp, không mất lượt đã chơi."}else{won=false;order=shuffleArray([0,1,2,3,4,5,6]);if(order.every((v,i)=>v===targetOrder[i]))[order[0],order[1]]=[order[1],order[0]];$("result").textContent="Kéo thẻ ở hàng dưới để sắp xếp. Tiến trình sẽ tự lưu khi đổi vị trí.";saveGameState()}$("check").disabled=won;render();updateCheckCost();updateReward()}
+function render(){
+ $("target").innerHTML=targetOrder.map((_,i)=>`<div class="card top-card" aria-label="Thẻ mục tiêu bị ẩn, vị trí ${i+1}"><div class="flex flex-col items-center gap-2"><i class="fa-solid fa-question backmark"></i><span class="small-label">${String(i+1).padStart(2,"0")}</span></div></div>`).join("");
+ $("board").innerHTML=order.map((ci,pos)=>{const c=colors[ci];return `<button draggable="true" class="card color-card ${selected.includes(pos)?"selected":""}" data-pos="${pos}" style="background:radial-gradient(circle at 50% 35%,${c.hex}55,${c.hex}15 55%,#101426);border-color:${c.hex};color:${c.hex}" aria-label="Thẻ màu ${c.name}, vị trí ${pos+1}"><span class="absolute top-2 left-2 small-label text-white/80">${String(pos+1).padStart(2,"0")}</span><span class="orb"></span><span class="absolute bottom-2 small-label text-white">${c.name.toUpperCase()}</span></button>`}).join("");
+ const nodes=[...$("board").querySelectorAll("button")];nodes.forEach(b=>{b.addEventListener("click",()=>selectCard(Number(b.dataset.pos)));b.addEventListener("dragstart",e=>{dragFrom=Number(b.dataset.pos);b.classList.add("dragging");if(e.dataTransfer){e.dataTransfer.effectAllowed="move";e.dataTransfer.setData("text/plain",String(dragFrom))}});b.addEventListener("dragend",()=>{dragFrom=-1;nodes.forEach(n=>n.classList.remove("dragging","drop-target"))});b.addEventListener("dragover",e=>{e.preventDefault();b.classList.add("drop-target");if(e.dataTransfer)e.dataTransfer.dropEffect="move"});b.addEventListener("dragleave",()=>b.classList.remove("drop-target"));b.addEventListener("drop",e=>{e.preventDefault();const from=dragFrom>=0?dragFrom:Number(e.dataTransfer?.getData("text/plain")),to=Number(b.dataset.pos);if(from>=0&&from!==to){[order[from],order[to]]=[order[to],order[from]];selected=[];render();$("result").textContent="Đã đổi vị trí thẻ. Nhấn Kiểm tra khi muốn thử.";saveGameState()}})})
+}
+function selectCard(pos){if(won)return;if(selected.includes(pos)){selected=selected.filter(x=>x!==pos);render()}else if(selected.length===1){const a=selected[0];[order[a],order[pos]]=[order[pos],order[a]];selected=[];render();saveGameState()}else{selected=[pos];render()}}
+function check(){
+ if(won)return;
+ if(!playerName){$("result").innerHTML='Chưa tìm thấy tên nhân vật. Hãy đăng nhập vào <b>chientruong.html</b> trước khi chơi.';return}
+ const cost=currentCost(),b=balance();
+ if(b<cost){$("result").textContent=`Không đủ Pi! Lần kiểm tra này cần ${cost.toLocaleString("vi-VN")} Pi, hiện có ${b.toLocaleString("vi-VN")} Pi.`;return}
+ localStorage.setItem(piKey(),String(b-cost));checkCount++;showBalance();updateCheckCost();
+ const correct=order.reduce((n,c,i)=>n+(c===targetOrder[i]?1:0),0);
+ if(correct===7){
+   won=true;
+   const EVENT_ID=pickEventCardId();
+   const reward=saveEventCard(EVENT_ID);
+   $("result").innerHTML=`<span class="text-emerald-300 font-black text-lg">✨ HOÀN HẢO! 7/7 vị trí chính xác!</span><p class="mt-1">${reward.duplicate?`Bạn đã sở hữu thẻ này nên được cộng thêm ${reward.addedPower} Power gốc của thẻ sự kiện.`:"Bạn đã nhận thẻ sự kiện!"} Power hiện tại: <b class="text-amber-300">${reward.totalPower.toLocaleString("vi-VN")}</b>. Phí kiểm tra: ${cost.toLocaleString("vi-VN")} Pi.</p>`;
+   $("cardId").textContent="";$("check").disabled=true;updateReward();showEventReward(reward.card,reward.duplicate,reward.addedPower,reward.totalPower);
+ }else{
+   $("result").innerHTML=`<span class="font-black text-amber-300 text-lg">${correct}/7 vị trí đúng</span><p class="mt-1">Bạn đã mất ${cost.toLocaleString("vi-VN")} Pi cho lần kiểm tra này. Lần tiếp theo sẽ tốn ${currentCost().toLocaleString("vi-VN")} Pi. Tiếp tục sắp xếp và thử lại nhé!</p>`;
+ }
+ saveGameState();
+}
+$("check").addEventListener("click",check);$("shuffle").addEventListener("click",()=>{if(won)return;order=shuffleArray(order);selected=[];render();$("result").textContent=`Đã xáo trộn hàng màu. Phí kiểm tra hiện tại: ${currentCost().toLocaleString("vi-VN")} Pi.`;saveGameState()});$("player").textContent=playerName||"Chưa đăng nhập";showBalance();newRound();window.addEventListener("storage",e=>{if(e.key===piKey()||e.key===COLLECTION_KEY) {showBalance();updateReward()}});
+</script>
+</body></html>
