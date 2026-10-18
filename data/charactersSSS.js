@@ -418,15 +418,15 @@ const CHARACTER_POOL_SSS = [
   {
     id: "SSS33",
     name: "King",
-    title: "The Seven Deadly Sins",
+    title: "One-Punch Man",
     rarity: "SSS",
-    element: "Mộc",
+    element: "Thổ", // Hoặc "Phong" / "Dark" tùy theo thiết kế gameplay của bạn
     power: 100,
     stamina: 100,
     mediaType: "image",
     mediaExt: "jpg",
     mediaUrl: "assets/cards/SSS/King.jpg",
-    lore: "Thánh Thạch Linh Thương Chastiefol sẽ bảo vệ những người ta yêu thương."
+    lore: "Người đàn ông mạnh nhất Trái Đất cùng tiếng đập tim King Engine khiến mọi quái vật phải khiếp sợ."
   },
   {
     id: "SSS34",
