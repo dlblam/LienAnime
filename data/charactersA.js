@@ -353,7 +353,7 @@ const CHARACTER_POOL_A = [
   {
     id: "A28",
     name: "Miyamoto Musashi",
-    title: "Baki the Grappler",
+    title: "Fate/stay night",
     rarity: "A",
     element: "Phong",
     power: 10,
@@ -361,7 +361,7 @@ const CHARACTER_POOL_A = [
     mediaType: "image",
     mediaExt: "jpg",
     mediaUrl: "assets/cards/A/Miyamoto Musashi.jpg",
-    lore: "Đỉnh cao của kiếm thuật là chém đứt đối thủ ngay cả khi không có kiếm trong tay."
+    lore: "Nhị thiên nhất lưu! Lưỡi kiếm này sẽ cắt đứt khoảng hư không!"
   },
   {
     id: "A29",

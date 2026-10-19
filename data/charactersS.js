@@ -340,7 +340,7 @@ const CHARACTER_POOL_S = [
   {
     id: "S27",
     name: "Musashi Miyamoto",
-    title: "Fate/stay night",
+    title: "Baki the Grappler",
     rarity: "S",
     element: "Phong",
     power: 20,
@@ -348,7 +348,7 @@ const CHARACTER_POOL_S = [
     mediaType: "image",
     mediaExt: "jpg",
     mediaUrl: "assets/cards/S/Musashi Miyamoto.jpg",
-    lore: "Nhị thiên nhất lưu! Lưỡi kiếm này sẽ cắt đứt khoảng hư không!"
+    lore: "Ngươi có cảm nhận được không? Lưỡi kiếm vô hình đã cắt qua cổ ngươi rồi đấy."
   },
   {
     id: "S28",
@@ -664,7 +664,7 @@ const CHARACTER_POOL_S = [
   },
   {
     id: "S52",
-    name: "Yuuki konno",
+    name: "Yuuki Konno",
     title: "Sword Art Online",
     rarity: "S",
     element: "Dark",

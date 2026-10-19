@@ -392,15 +392,15 @@ const CHARACTER_POOL_D = [
   {
     id: "D31",
     name: "Mei",
-    title: "Pokémon",
+    title: "Hell's Paradise",
     rarity: "D",
-    element: "Light",
+    element: "Mộc",
     power: 1,
     stamina: 1,
     mediaType: "image",
     mediaExt: "jpg",
     mediaUrl: "assets/cards/D/Mei.jpg",
-    lore: "Cùng khám phá vùng đất Unova với các bạn Pokémon nào!"
+    lore: "Tôi muốn bảo vệ mọi người... Dù cho cơ thể này có hóa thành cây đá!"
   },
   {
     id: "D32",

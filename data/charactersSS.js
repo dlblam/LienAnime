@@ -821,15 +821,15 @@ const CHARACTER_POOL_SS = [
   {
     id: "SS64",
     name: "Yuzuriha",
-    title: "Dr. STONE",
+    title: "Hell's Paradise",
     rarity: "SS",
-    element: "Mộc",
+    element: "Thủy",
     power: 50,
     stamina: 50,
     mediaType: "image",
     mediaExt: "jpg",
     mediaUrl: "assets/cards/SS/Yuzuriha.jpg",
-    lore: "Tớ tin Senku và Taiju nhất định sẽ làm được!"
+    lore: "Tôi sẽ không chết ở cái nơi quái đản này đâu. Tôi còn phải sống để trở về nữa!"
   },
   {
     id: "SS65",

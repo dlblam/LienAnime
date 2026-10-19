@@ -2784,7 +2784,7 @@
     <div id="gift-reward-card-detail" class="gift-reward-card-detail"></div>
     <div id="gift-reward-spins-note" class="gift-reward-spins-note hidden"></div>
     <div class="gift-reward-footer">
-      <button class="gift-reward-claim-btn" onclick="closeGiftReward()"><i class="fa-solid fa-check mr-2"></i>Tuyệt vời</button>
+      <button id="gift-reward-next-btn" class="gift-reward-claim-btn" onclick="nextGiftRewardCard()"><i class="fa-solid fa-check mr-2"></i>Tuyệt vời</button>
     </div>
   </div>
 </div>
@@ -2904,6 +2904,7 @@ const GIFT_CODES = {
   "TAIGIRL": { spins: 50, cards: ["VIP56"] },
   "17102026": 50,
   "LBDSTUDIO": 100,
+  "NUVUONG2010": { spins: 0, cards: ["SSS42", "SS36", "S17", "A21", "B44"] },
   /*
     MÃ CÓ THỂ TẶNG THẺ TRỰC TIẾP:
 
@@ -2923,6 +2924,18 @@ const GIFT_CODES = {
   // Ví dụ:
   // "TANGTHE601": { spins: 0, cards: ["601"] },
   // "VIP2007": { spins: 10, cards: ["VIP"] },
+
+  // Random 1 thẻ bất kỳ trong toàn bộ CHARACTER_POOL:
+  // "RANDOM1THE": { spins: 0, randomCards: 1 },
+
+  // Random 5 thẻ khác nhau trong toàn bộ CHARACTER_POOL:
+  // "RANDOM5THE": { spins: 0, randomCards: 5 },
+
+  // Random 2 thẻ trong nhóm ID đã chọn:
+  // "RANDOMNHOM": { spins: 10, cards: ["601", "602", "603"], randomCards: 2 },
+
+  // Tặng cố định nhiều thẻ:
+  // "TANGNHIEUTHE": { spins: 0, cards: ["601", "602", "603"] },
 
 };
 
@@ -3463,64 +3476,106 @@ function closeGiftReward() {
 }
 
 
-function showGiftReward(code, giftCards, addedCards, spins) {
+let giftRevealState = null;
+
+function renderGiftRewardStep() {
+  const state = giftRevealState;
+  if (!state) return;
+
+  const { code, giftCards, index, addedCards, spins } = state;
   const overlay = document.getElementById("gift-reward-overlay");
   const detail = document.getElementById("gift-reward-card-detail");
   const message = document.getElementById("gift-reward-message");
   const spinNote = document.getElementById("gift-reward-spins-note");
+  const action = document.getElementById("gift-reward-next-btn");
+  if (!overlay || !detail) return;
 
-  if (!overlay || !detail || !Array.isArray(giftCards) || giftCards.length === 0) return;
-
-  /* Chỉ hiển thị giao diện này khi Gift Code thực sự tặng thẻ. */
-  const char = giftCards[0];
+  const char = giftCards[index];
+  if (!char) return;
 
   if (message) {
     message.textContent = giftCards.length > 1
-      ? `Chúc mừng! Bạn vừa nhận được ${giftCards.length} thẻ nhân vật.`
-      : "Chúc mừng! Bạn vừa nhận được một thẻ nhân vật.";
+      ? `Thẻ ${index + 1}/${giftCards.length} • Mã ${code} đã tặng bạn ${giftCards.length} thẻ nhân vật.`
+      : `Chúc mừng! Mã ${code} tặng bạn một thẻ nhân vật.`;
   }
 
+  // Chỉ dựng thẻ hiện tại; nhấn nút mới chuyển sang thẻ kế tiếp.
+  detail.style.gridTemplateColumns = "minmax(0,1fr)";
   detail.innerHTML = `
-    <div class="gift-reward-art frame-${char.rarity || "D"} ${isVIP(char) ? "vip-card-shell" : ""}">
-      ${renderMedia(char)}
-      ${renderElementIcon(char)}
-      ${isVIP(char) ? `<div class="vip-glass"></div><div class="vip-sparkles"></div>` : ""}
-      <span class="gift-reward-rarity">HẠNG ${char.rarity || "CARD"}</span>
-    </div>
-    <div class="gift-reward-info">
+    <div class="gift-reward-info" style="min-width:0;text-align:center;max-width:330px;width:100%;margin:0 auto">
+      <div class="gift-reward-art frame-${char.rarity || "D"} ${isVIP(char) ? "vip-card-shell" : ""}" style="max-width:270px;margin:0 auto 12px">
+        ${renderMedia(char)}
+        ${renderElementIcon(char)}
+        ${isVIP(char) ? `<div class="vip-glass"></div><div class="vip-sparkles"></div>` : ""}
+        <span class="gift-reward-rarity">HẠNG ${char.rarity || "CARD"}</span>
+      </div>
       <div class="gift-reward-congrats"><i class="fa-solid fa-sparkles"></i>THẺ ĐÃ ĐƯỢC NHẬN</div>
-      <div class="gift-reward-name">${char.name || "Unknown"}</div>
+      <div class="gift-reward-name" style="font-size:clamp(17px,3vw,25px)">${char.name || "Unknown"}</div>
       <div class="gift-reward-title-small">${char.title || char.element || "Liên Anime CHARACTER"}</div>
       <div class="gift-reward-meta">
-        <div class="gift-reward-meta-item"><span class="gift-reward-meta-label">Cấp độ</span><span class="gift-reward-meta-value">${char.rarity || "—"}</span></div>
-        <div class="gift-reward-meta-item"><span class="gift-reward-meta-label">Sức mạnh</span><span class="gift-reward-meta-value">${Number(char.power || 0).toLocaleString()}</span></div>
+        <div class="gift-reward-meta-item"><span class="gift-reward-meta-label">Bậc thẻ</span><span class="gift-reward-meta-value">${char.rarity || "—"}</span></div>
+        <div class="gift-reward-meta-item"><span class="gift-reward-meta-label">Power</span><span class="gift-reward-meta-value">${Number(char.power || 0).toLocaleString()}</span></div>
         <div class="gift-reward-meta-item"><span class="gift-reward-meta-label">Hệ</span><span class="gift-reward-meta-value">${char.element || "—"}</span></div>
         <div class="gift-reward-meta-item"><span class="gift-reward-meta-label">Thể lực</span><span class="gift-reward-meta-value">${getStamina(char)}</span></div>
       </div>
-      <div class="gift-reward-lore">"${char.lore || "Một nhân vật mới đã gia nhập bộ sưu tập của bạn."}"</div>
+      <div class="gift-reward-lore">"${char.lore || "Một nhân vật đã gia nhập bộ sưu tập của bạn."}"</div>
     </div>
   `;
 
-  if (isVIP(char)) {
-    const vipVisual = detail.querySelector(".vip-card-shell");
-    vipCardEnhance(vipVisual, char);
-  }
+  detail.querySelectorAll(".vip-card-shell").forEach(el => vipCardEnhance(el, char));
 
   if (spinNote) {
-    if (spins > 0) {
-      spinNote.classList.remove("hidden");
-      spinNote.innerHTML = `Mã <strong class="text-amber-400">${code}</strong> tặng thêm <strong class="text-amber-400">+${spins} lượt Gacha</strong>.`;
-    } else {
-      spinNote.classList.add("hidden");
-      spinNote.textContent = "";
-    }
+    const notes = [];
+    if (spins > 0) notes.push(`Mã <strong class="text-amber-400">${code}</strong> tặng <strong class="text-amber-400">+${spins} lượt Gacha</strong>.`);
+    if (addedCards < giftCards.length) notes.push(`${giftCards.length - addedCards} thẻ đã sở hữu nên không thêm bản trùng.`);
+    spinNote.classList.toggle("hidden", notes.length === 0);
+    spinNote.innerHTML = notes.join("<br>");
   }
+
+  if (action) {
+    const isLast = index >= giftCards.length - 1;
+    action.innerHTML = isLast
+      ? '<i class="fa-solid fa-check mr-2"></i>Tuyệt vời'
+      : '<i class="fa-solid fa-arrow-right mr-2"></i>Thẻ tiếp theo';
+  }
+}
+
+function nextGiftRewardCard() {
+  if (!giftRevealState) {
+    closeGiftReward();
+    return;
+  }
+
+  if (giftRevealState.index < giftRevealState.giftCards.length - 1) {
+    giftRevealState.index++;
+    renderGiftRewardStep();
+  } else {
+    closeGiftReward();
+  }
+}
+
+function closeGiftReward() {
+  const overlay = document.getElementById("gift-reward-overlay");
+  if (!overlay) return;
+  overlay.classList.remove("show");
+  setTimeout(() => {
+    if (!overlay.classList.contains("show")) overlay.classList.add("hidden");
+  }, 300);
+  document.body.classList.remove("overflow-hidden");
+  giftRevealState = null;
+}
+
+function showGiftReward(code, giftCards, addedCards, spins) {
+  const overlay = document.getElementById("gift-reward-overlay");
+  if (!overlay || !Array.isArray(giftCards) || giftCards.length === 0) return;
+
+  giftRevealState = { code, giftCards, addedCards, spins, index: 0 };
+  renderGiftRewardStep();
 
   overlay.classList.remove("hidden");
   requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add("show")));
   document.body.classList.add("overflow-hidden");
 }
-
 
 function redeemGiftCode() {
 
@@ -3587,6 +3642,15 @@ function redeemGiftCode() {
         spins: 10,
         cards: ["601", "VIP"]
       }
+
+    Random 1 thẻ bất kỳ:
+      { spins: 0, randomCards: 1 }
+
+    Random nhiều thẻ bất kỳ:
+      { spins: 0, randomCards: 5 }
+
+    Random 2 thẻ trong danh sách chỉ định:
+      { spins: 0, cards: ["601", "602", "603"], randomCards: 2 }
   */
 
   const rawConfig =
@@ -3608,10 +3672,38 @@ function redeemGiftCode() {
     );
 
 
-  const requestedCards =
+  const cardPoolIds =
     Array.isArray(config.cards)
       ? config.cards.map(id => String(id))
       : [];
+
+  /*
+    Gift Code hỗ trợ:
+    - cards: ["ID1", "ID2"]                 => tặng các thẻ chỉ định
+    - randomCards: 1                        => random 1 thẻ trong toàn bộ CHARACTER_POOL
+    - cards: ["ID1","ID2","ID3"], randomCards: 2 => random 2 thẻ từ danh sách ID đó
+    Thẻ random không lặp trong cùng một mã nếu chọn từ cùng một pool.
+  */
+  const randomCount = Math.max(0, Math.floor(Number(config.randomCards) || 0));
+  let requestedCards = cardPoolIds;
+
+  if (randomCount > 0) {
+    const candidatePool = cardPoolIds.length
+      ? CHARACTER_POOL.filter(char => cardPoolIds.includes(String(char.id)))
+      : CHARACTER_POOL.slice();
+
+    if (candidatePool.length < randomCount) {
+      showToast(`Mã quà tặng lỗi: pool chỉ có ${candidatePool.length} thẻ, không đủ ${randomCount} thẻ ngẫu nhiên.`, "error");
+      return;
+    }
+
+    const shuffled = candidatePool.slice();
+    for (let i = shuffled.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    requestedCards = shuffled.slice(0, randomCount).map(char => String(char.id));
+  }
 
 
   /*
